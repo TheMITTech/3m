@@ -1,6 +1,7 @@
 <ASCII-WIN>
 <DefineCharStyle:Emphasis=<Nextstyle:Emphasis><cTypeface:Bold>><DefineCharStyle:Slant=<Nextstyle:Slant><cTypeface:Italic>><DefineCharStyle:EmphasisSlant=<Nextstyle:EmphasisSlant><cTypeface:Bold Italic>>
 <?php
+header('Content-type: text/plain');
 include 'config.php';
 // These define a bunch of variables that should be changed if the format of the mast changes
 $nameSeperator=",";
