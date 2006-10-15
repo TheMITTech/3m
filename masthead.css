@@ -1,0 +1,95 @@
+/* CSS for The Tech's Masthead */
+
+body {
+  width: 590px; /* doesn't work in IE */
+  /* next two rules center the body */
+  margin-left: auto;
+  margin-right: auto;
+}
+ 
+h1 {
+  text-align: center;
+}
+ 
+div.exec { 
+  text-align: center;
+  font-size: larger;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+ 
+div.exec h2 {
+  font-size: inherit;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+ 
+div.exec ul {
+  list-style-type: none;
+  padding-left: 0; /* used by Firefox, Safari */
+  margin-left: 0; /* used by IE, Opera */
+  margin-top: 0;
+}
+ 
+div.department {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+ 
+div.department h2 {
+  font-size: smaller;
+  font-weight: normal;
+  font-style: italic;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  border-bottom-width: thin; 
+  border-bottom-width: 1px; /* IE makes "thin" too thick */
+  border-bottom-style: solid;
+}
+ 
+div.department div {
+  margin-top: 0.25em;
+  text-align: justify;
+}
+ 
+div.department div h3 {
+  display: inline;
+  font-size: inherit;
+  font-weight: bold;
+}
+ 
+/* doesn't work in IE6 */
+div.department div h3:after {
+  content: ": ";
+}
+ 
+div.department div ul {
+  display: inline;
+  padding-left: 0; /* used by Firefox, Safari */
+  margin-left: 0; /* used by IE, Opera */
+}
+ 
+div.department div ul li {
+  display: inline;
+}
+ 
+/* none of the :after CSS works in IE6 */
+div.department div ul li:after {
+  content: ", ";
+}
+div.department div ul li.last:after {
+  content: "; ";
+}
+div.department div ul li.last-last:after {
+  content: ".";
+}
+ 
+p#bottom-matter {
+  margin-top: 1em;
+  padding-top: 0.25em;
+  border-top-width:thin;
+  border-top-width: 1px; /* IE makes "thin" too thick */
+  border-top-style: solid;
+  font-size: smaller;
+  text-align: justify;
+}
