@@ -24,13 +24,6 @@ div.exec h2 {
   margin-bottom: 0;
 }
  
-div.exec ul {
-  list-style-type: none;
-  padding-left: 0; /* used by Firefox, Safari */
-  margin-left: 0; /* used by IE, Opera */
-  margin-top: 0;
-}
- 
 div.department {
   margin-top: 1em;
   margin-bottom: 1em;
@@ -50,38 +43,6 @@ div.department h2 {
 div.department div {
   margin-top: 0.25em;
   text-align: justify;
-}
- 
-div.department div h3 {
-  display: inline;
-  font-size: inherit;
-  font-weight: bold;
-}
- 
-/* doesn't work in IE6 */
-div.department div h3:after {
-  content: ": ";
-}
- 
-div.department div ul {
-  display: inline;
-  padding-left: 0; /* used by Firefox, Safari */
-  margin-left: 0; /* used by IE, Opera */
-}
- 
-div.department div ul li {
-  display: inline;
-}
- 
-/* none of the :after CSS works in IE6 */
-div.department div ul li:after {
-  content: ", ";
-}
-div.department div ul li.last:after {
-  content: "; ";
-}
-div.department div ul li.last-last:after {
-  content: ".";
 }
  
 p#bottom-matter {
