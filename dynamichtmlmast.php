@@ -1,25 +1,19 @@
-<?php
-// PHP tries to parse the <?xml and is very sad.
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 
 <head>
 <title>The Tech Masthead</title>
-<link rel="stylesheet" href="masthead.css" type="text/css" />
-<meta http-equiv="Content-Script-Type" content="text/javascript" />
-<script src="masthead.js" type="text/javascript"></script>
+<link rel="stylesheet" href="masthead.css" type="text/css">
 </head>
 
 
-<body onload="emulateAfter();">
+<body>
 
-<h1><img src="/flaggy.gif" alt="The Tech" /></h1>
+<h1><img src="/flaggy.gif" alt="The Tech"></h1>
 
 <?php
-header('Content-type: application/xhtml+xml; charset=utf-8');
+header('Content-type: text/html; charset=utf-8');
 include 'config.php';
 // These define a bunch of variables that should be changed if the format of the mast changes
 $nameSeperator=",";
@@ -155,7 +149,7 @@ $prodStaffThisIssue=array_pop($mastArray);
 $adBoard=array_pop($mastArray);
 array_shift($adBoard); //This takes off the blank print name
 foreach($executiveBoard as $job){
-	jobEcho($job, "<div class=\"exec\">\n  <h2>", "</h2>\n", "  <div>If you see this, something is wrong.</div><div>", "</div>\n", "  <ul><li>", "</li></ul>\n</div>\n\n"); //Echos ExecBoard; Uses the jobEcho with special formatting
+	jobEcho($job, "<div class=\"exec\">\n  <h2>", "</h2>\n", "  <div>If you see this, something is wrong.</div><div>", "</div>\n", "  <div>", "</div>\n</div>\n\n"); //Echos ExecBoard; Uses the jobEcho with special formatting
 }
 
 //Actual printing out of information
@@ -164,14 +158,14 @@ foreach($mastArray as $dept){
 	echo "<div class=\"department\">\n  <h2>$printDept</h2>\n\n  <div>\n"; //Echos the department name
 	$lastJob=array_pop($dept); //Last job will have special formatting (IE a period) so it's removed from the queue
 	foreach($dept as $job){
-		jobEcho($job, "    <h3>", "</h3>\n    <ul>\n", "      <li>", "</li>\n", "      <li class=\"last\">", "</li>\n    </ul>\n\n");
+		jobEcho($job, "    <b>", ":</b>\n", "      ", ",\n", "      ", ";\n\n");
 	}
-	jobEcho($lastJob, "    <h3>", "</h3>\n    <ul>\n", "      <li>", "</li>\n", "      <li class=\"last-last\">", "</li>\n    </ul>\n  </div>\n</div>\n\n");
+	jobEcho($lastJob, "    <b>", ":</b>\n", "      ", ",\n", "      ", ".\n  </div>\n</div>\n\n");
 }
 
 foreach($adBoard as $job){
 	$job[0]=substr($job[0], 0, -1); //Normally, adboard would get an "s" attached to the end; this suppresses it
-	jobEcho($job, "<div class=\"department\">\n  <h2>", "</h2>\n  <div>\n    <ul>\n", "      <li>", "</li>\n", "      <li class=\"last-last\">", "</li>\n    </ul>\n  </div>\n</div>\n\n"); //Special Adboard formatting
+	jobEcho($job, "<div class=\"department\">\n  <h2>", "</h2>\n  <div>\n", "      ", ",\n", "      ", ".\n  </div>\n</div>\n\n"); //Special Adboard formatting
 }
 
 /*
