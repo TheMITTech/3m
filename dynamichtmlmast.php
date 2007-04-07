@@ -1,17 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<?php
+// The first thing we want in our output is actually php, so we'll need a print
+// block to play nicely
+print <<< EOF
+<?
+require("../lib/includes/the-tech.php");
+\$about_active="active";
+\$title_suffix="Our Staff";
+\$page_height="1180px";
+require("../lib/templates/header.php");
+require("./sidebar.html");
+?>
+EOF
+?>
 
-<head>
-<title>The Tech Masthead</title>
 <link rel="stylesheet" href="masthead.css" type="text/css">
-</head>
 
-
-<body>
-
-<h1><img src="/flaggy.gif" alt="The Tech"></h1>
-
+<div id="main" style="float:right;width:660;border-right: 0px;padding-top:0;">
 <?php
 header('Content-type: text/html; charset=utf-8');
 include 'config.php';
@@ -199,6 +203,10 @@ on recycled paper by Charles River Publishing.</em></p>
 
 <p id="last-updated">This masthead was last updated on <?php echo date("F j, Y"); ?>.</p>
 
-</body>
-
-</html>
+</div>
+<?
+// Like the beginning, we end with PHP code
+print <<< EOF
+<?require("../lib/templates/footer.php");?>
+EOF
+?>
