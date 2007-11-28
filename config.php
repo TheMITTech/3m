@@ -4,12 +4,14 @@ $user = '3m';
 $password = 'pleaseChangeMeS00n';
 $dbnames = 'tt';
 $dbdepts = 'ttdepartments';
+@mysql_connect("$host","$user","$password") or fatal("Error connecting to server. Please contact an admin.");
 function mysqlquery($db, $query){
-	global $host, $user, $password, $dbnames, $dbdepts;
-	mysql_connect("$host","$user","$password") or die("Error connecting to server. Please try again later.");
-	mysql_select_db("$db") or die("Error opening database. Please contact an admin.");
-	$sqloutput=mysql_query("$query") or die("Query failed. Please retry.");
-	mysql_close();
-	return $sqloutput;
+  @mysql_select_db("$db") or fatal("Error opening database. Please contact an admin.");
+  $sqloutput=mysql_query("$query") or fatal("Query failed. Please retry.");
+  return $sqloutput;
+}
+function fatal($message) {
+  @header("HTTP/1.1 500 Internal Server Error");
+  die($message);
 }
 ?> 
