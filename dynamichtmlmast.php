@@ -1,10 +1,13 @@
 <?php
+include 'config.php';
+header('Content-type: text/html; charset=utf-8');
 // The first thing we want in our output is actually php, so we'll need a print
 // block to play nicely
 print <<< EOF
 <?
 require("../lib/includes/the-tech.php");
 \$about_active="active";
+\$a_staff_active="active";
 \$title_suffix="Our Staff";
 \$page_height="1180px";
 require("../lib/templates/header.php");
@@ -17,8 +20,6 @@ EOF
 
 <div id="main" style="float:right;width:660;border-right: 0px;padding-top:0;">
 <?php
-header('Content-type: text/html; charset=utf-8');
-include 'config.php';
 // These define a bunch of variables that should be changed if the format of the mast changes
 $nameSeperator=",";
 $jobSeperator=";";
