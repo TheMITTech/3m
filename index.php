@@ -17,6 +17,15 @@
     <td colspan="4"><a href="contactlists/manboardcontact.php">Manboard Contact List</a></td>
   </tr>
   <tr>
+    <td colspan="4"><a href="contactlists/alleditcontact.php">All Editors</a></td>
+  </tr>
+  <tr>
+    <td colspan="4"><a href="contactlists/allactivemail.php">All Active Members</a></td>
+  </tr>
+  <tr>
+    <td colspan="4"><a href="contactlists/everyonemail.php">Everyone's Email List</a></td>
+  </tr>
+  <tr>
     <td colspan="4"><a href="createform.php">Create New User</a></td>
   </tr>
   <?php
@@ -34,7 +43,13 @@ for ($i=0; $i < $num; $i++) {
 	else {
 		$name="$first $middle $last";
 	}
-	echo "<tr><td>$name</td><td>$dept</td><td>$position</td><td><a href=\"individual.php?email=$email\"><input type=\"button\" value=\"View...\"></a></td><td><a href=\"createform.php?mod=1&email=$email\"><input type=\"button\" value=\"Edit...\"></a></td></tr>";
+	echo "<tr>
+          <td>$name</td>
+          <td>$dept</td>
+          <td>$position</td>
+          <td><a href=\"individual.php?email=$email\"><input type=\"button\" value=\"View...\"></a></td>
+          <td><a href=\"createform.php?mod=1&email=$email\"><input type=\"button\" value=\"Edit...\"></a></td>
+        </tr>";
 }
 ?>
 </table>
