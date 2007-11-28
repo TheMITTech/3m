@@ -1,8 +1,8 @@
 <?php
+include 'config.php';
 header('Content-type: text/plain');
 header('Content-Disposition: attachment; filename=dynamicmarkmast.txt');
 echo "<ASCII-WIN>\r\n";
-include 'config.php';
 // These define a bunch of variables that should be changed if the format of the mast changes
 $nameSeperator=",";
 $jobSeperator=";";
