@@ -1,5 +1,6 @@
 <?
 include '../config.php';
+header("Content-type: text/plain");
 echo "{| border=\"1\"\n! Name !! Department !! Position !! E-mail !! Phone !! AIM\n";
 $query="SELECT first, middle, last, dept, position, email, phone, aim FROM bio WHERE active=1 ORDER BY dept, position, last";
 $result=mysqlquery($dbnames,$query);
