@@ -209,5 +209,6 @@ on recycled paper by Charles River Publishing.</em></p>
 // Like the beginning, we end with PHP code
 print <<< EOF
 <?require("../lib/templates/footer.php");?>
+
 EOF
 ?>
