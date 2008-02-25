@@ -38,6 +38,15 @@ if ($mod==1){
 }
 $query="INSERT INTO bio VALUES ('','$first','$middle','$last','$class','$gender','$email','$department','$job','$year/$month/$day','','$byear/$bmonth/$bday','$cleanphone','$aim','1','1')";
 mysqlquery($dbnames,$query);
-echo "You have successfully been entered into the staff system.<br>
-<a href=\"/3m/\"> Click here to go back</a>";
+echo <<< END
+<html>
+<head>
+<meta http-equiv="refresh" content="3; url=/3m/">
+</head>
+<body>
+You have successfully been entered into the staff system.<br>
+<a href="/3m/"> Click here to go back</a>
+</body>
+</html>
+END;
 ?>
