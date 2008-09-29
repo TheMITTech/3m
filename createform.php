@@ -111,7 +111,7 @@ selectCtrl.options[0].selected = true;
 }
 </script>
 </head>
-<body>
+<body style="width: 50%">
 <H1 align="center">The Tech</H1>';
 if ($mod==1){
 	echo '<H2 align="center">Staff Modification Page</H2>';
@@ -279,6 +279,8 @@ End Date
 	}
 	echo'<p align="center">
     <input type="submit" value="Submit" name="submit">
+    <input style="float:right" type="submit" value="Deactive me!" name="delete">
   </p>
+  <br>
 </form>';
 ?>

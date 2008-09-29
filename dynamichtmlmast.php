@@ -6,7 +6,7 @@ header('Content-type: text/html; charset=utf-8');
 print <<< EOF
 <?
 require("../lib/includes/the-tech.php");
-\$about_active="active";
+\$about_active="on-";
 \$a_staff_active="active";
 \$title_suffix="Our Staff";
 \$page_height="1180px";

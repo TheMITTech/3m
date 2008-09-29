@@ -36,17 +36,17 @@ if ($mod==1){
 	$query="UPDATE `bio` SET `active` = '0' WHERE `email` ='$email' AND `active` ='1'";
 	mysqlquery($dbnames,$query);
 }
-$query="INSERT INTO bio VALUES ('','$first','$middle','$last','$class','$gender','$email','$department','$job','$year/$month/$day','','$byear/$bmonth/$bday','$cleanphone','$aim','1','1')";
-mysqlquery($dbnames,$query);
-echo <<< END
+if($_POST["delete"] != "Deactive me!") {
+  $query="INSERT INTO bio VALUES ('','$first','$middle','$last','$class','$gender','$email','$department','$job','$year/$month/$day','','$byear/$bmonth/$bday','$cleanphone','$aim','1','1')";
+  mysqlquery($dbnames,$query);
+}
+?>
 <html>
 <head>
 <meta http-equiv="refresh" content="3; url=/3m/">
 </head>
 <body>
-You have successfully been entered into the staff system.<br>
+You have successfully modified the staff system. If, instead, you have fucked it up, e-mail tenman@the-tech.mit.edu.<br>
 <a href="/3m/"> Click here to go back</a>
 </body>
 </html>
-END;
-?>
