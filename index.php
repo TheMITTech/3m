@@ -29,7 +29,7 @@
     <td colspan="4"><a href="createform.php">Create New User</a></td>
   </tr>
   <?php
-$query="SELECT `last`, `first`, `middle`, `email` FROM `bio` GROUP BY `email` ORDER BY `last`";
+$query="SELECT `last`, `first`, `middle`, `email` FROM `bio` WHERE active=1 GROUP BY `email` ORDER BY `last`";
 $result=mysqlquery($dbnames,$query);
 $num=mysql_numrows($result);
 for ($i=0; $i < $num; $i++) {

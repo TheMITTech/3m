@@ -54,7 +54,9 @@ $num=mysql_numrows($result);
 for ($i=0; $i < $num; $i++) {
 	echo 'new Array(new Array("Please Select Position",0),';
 	$currentdept=mysql_result($result,$i);
-	$query="SELECT * FROM `$currentdept`";
+        // id #1 is actually the name of the department on the masthead
+        // but it should never be used for a staff member's position
+	$query="SELECT * FROM `$currentdept` where id != 1";
 	$deptresult=mysqlquery($dbdepts,$query);
 	$deptnum=mysql_numrows($deptresult);
 	for ($j=0; $j < $deptnum; $j++) {
@@ -70,7 +72,7 @@ for ($i=0; $i < $num; $i++) {
 		else {
 			echo '),';
 		}
-		}
+              }
 	if ($i==($num-1)){
 		echo ')';
 	}
@@ -79,8 +81,7 @@ for ($i=0; $i < $num; $i++) {
 	}
 
 }
-echo '
-);
+echo ');
 function fillSelectFromArray(selectCtrl, itemArray, goodPrompt, badPrompt, defaultItem) {
 var i, j;
 var prompt;
@@ -109,10 +110,30 @@ j++;
 selectCtrl.options[0].selected = true;
    }
 }
+
+function init(dept, pos) {
+  var index=depts.length;
+  select = document.getElementById("selectDept");
+  for(i=0; i<select.options.length; i++) {
+    if(select.options[i].value == dept) {
+      select.selectedIndex = i;
+      index = i;
+    }
+  }
+  select = document.getElementById("selectPos");
+  fillSelectFromArray(select, depts[index-1]);
+  for(i=0; i<select.options.length; i++) {
+    if(select.options[i].value == pos) select.selectedIndex = i;
+  }
+}
 </script>
-</head>
-<body style="width: 50%">
-<H1 align="center">The Tech</H1>';
+</head>';
+if($mod == 1) {
+  echo "<body onload=\"init('$department', '$job');\" style='width: 50%'>";
+} else {
+  echo "<body style='width: 50%'>";
+}
+echo '<H1 align="center">The Tech</H1>';
 if ($mod==1){
 	echo '<H2 align="center">Staff Modification Page</H2>';
 }
@@ -177,13 +198,16 @@ echo'<form method="post" action="create.php">
     </tr>
     <tr>
       <td><div align="center">
-         <SELECT NAME="department" onChange="fillSelectFromArray(this.form.job, ((this.selectedIndex == -1) ? null : depts[this.selectedIndex-1]));">
+         <SELECT ID="selectDept" NAME="department" onChange="fillSelectFromArray(this.form.job, ((this.selectedIndex == -1) ? null : depts[this.selectedIndex-1]));">
 <OPTION VALUE="-1">Select Department';
 $query="SHOW TABLES IN ttdepartments";
 $result=mysqlquery($dbdepts,$query);
 $num=mysql_numrows($result);
 for ($i=0; $i < $num; $i++) {
 	$currentdept=ucwords(mysql_result($result,$i));
+        // zozer thought the zzzzzz table is a good way to store the order
+        // of the departments on the masthead.
+        if($currentdept=='Zzzzzz') continue;
 	echo '<OPTION VALUE="';
 	echo "$currentdept";
 	echo '">';
@@ -192,10 +216,8 @@ for ($i=0; $i < $num; $i++) {
 echo '</SELECT>
         </div></td>
       <td><div align="center">
-<SELECT NAME="job">';
-for ($i=0; $i < $num; $i++) {
+<SELECT ID="selectPos" NAME="job">'."\n";
 echo '<OPTION></OPTION>';
-}
 echo '</SELECT>
 
         </div></td>
