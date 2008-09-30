@@ -200,7 +200,7 @@ our mailing address: The Tech, P.O. Box 397029, Cambridge, Mass.
 Business: (617)&nbsp;258-8324. Facsimile: (617)&nbsp;258-8226.
 <em>Advertising, subscription, and typesetting rates available.</em>
 Entire contents <strong>&copy;&nbsp;<?php echo "$currentyear"; ?> The Tech</strong>. <em>Printed
-on recycled paper by Charles River Publishing.</em></p>
+on recycled paper by Saltus Press.</em></p>
 
 <p id="last-updated">This masthead was last updated on <?php echo date("F j, Y"); ?>.</p>
 
