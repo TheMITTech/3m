@@ -1,15 +1,22 @@
 <?php
 include 'config.php';
-header('Content-type: text/plain');
+header('Content-type: text/plain; charset="UTF-16BE"');
 header('Content-Disposition: attachment; filename=dynamicmarkmast.txt');
-echo "<ASCII-MAC>\r";
+specialEcho("<UNICODE-MAC>\r");
 // These define a bunch of variables that should be changed if the format of the mast changes
 $nameSeperator=",";
 $jobSeperator=";";
 $sectionSeperator=".";
 $gradYear=0;
 $blankYear=9999;
-$quoteSymbol="<0x2019>";
+$quoteSymbol="\xe2\x80\x99"; // this is the UTF8 for the symbol. we are going to build huge magical UTF8 strings that include this symbol and later we are going to turn them into UTF16 along with all their little character friends
+
+// If turning your output into UTF16 strings by brute force
+// is wrong, I want to be right. Please, please, I want to be right.
+// Anything but this. Free me from this UTF16 prison.
+function specialEcho($string){
+  echo iconv('UTF-8', 'UTF-16BE', $string); 
+}
 
 // Takes a year and returns the appropriately formated data
 function CleanYear($year){
@@ -117,13 +124,13 @@ function arrayCompile(){
 //This prints out each job with the appropriate enclosing tags
 function jobEcho($job, $jobStyleOpen, $jobStyleClose, $personOpen, $personClose, $lastPersonOpen, $lastPersonClose){
 	$printJob=array_shift($job); //Gets the printed title for the department from the array
-	echo "$jobStyleOpen$printJob$jobStyleClose"; //Prints it
+	specialEcho("$jobStyleOpen$printJob$jobStyleClose"); //Prints it
 	$peopleArray=array_shift($job); //Gets the array of staff
 	$lastPerson=array_pop($peopleArray); //Takes the last person out of the array (They have special formatting like a semi-colon or period instead of a comma
 	foreach($peopleArray as $person){
-		echo "$personOpen$person$personClose"; //Normal Person
+	  specialEcho("$personOpen$person$personClose"); //Normal Person
 	}
-	echo "$lastPersonOpen$lastPerson$lastPersonClose"; //Last Person
+	specialEcho("$lastPersonOpen$lastPerson$lastPersonClose"); //Last Person
 }
 
 $mastArray=arrayCompile(); //Instantiates the hiearchical mast array (Spelling = bad)
@@ -135,14 +142,14 @@ $prodStaffThisIssue=array_pop($mastArray);
 $adBoard=array_pop($mastArray);
 array_shift($adBoard); //This takes off the blank print name
 foreach($executiveBoard as $job){
-	jobEcho($job, "<ParaStyle:PROD-MastTop><cTypeface:Bold>", "<cTypeface:><0x000A>", "", "\n", "", "\r"); //Echos ExecBoard; Uses the jobEcho with special formatting
+	jobEcho($job, "<ParaStyle:PROD-MastTop><cTypeface:Bold>", "<cTypeface:>\x0A", "", "\n", "", "\r"); //Echos ExecBoard; Uses the jobEcho with special formatting
 }
 
 foreach($mastArray as $dept){
 	$printDept=array_shift($dept);
-	echo "<ParaStyle:PROD-MastDept>$printDept\r"; //Echos the department name
+	specialEcho("<ParaStyle:PROD-MastDept>$printDept\r"); //Echos the department name
 	$lastJob=array_pop($dept); //Last job will have special formatting (IE a period) so it's removed from the queue
-	echo "<ParaStyle:PROD-MastPeople>";
+	specialEcho("<ParaStyle:PROD-MastPeople>");
 	foreach($dept as $job){
 		jobEcho($job, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", "; ");
 	}
@@ -156,9 +163,9 @@ foreach($adBoard as $job){
 
 //This is effectively a normal department echo, except that it fixes the department title so that it's "Production Staff for This Issue" instead of just "Produciton Staff"
 $printDept=array_shift($prodStaffThisIssue)." for This Issue";
-echo "<ParaStyle:PROD-MastDept>$printDept\r";
+specialEcho("<ParaStyle:PROD-MastDept>$printDept\r");
 $lastJob=array_pop($prodStaffThisIssue);
-echo "<ParaStyle:PROD-MastPeople>";
+specialEcho("<ParaStyle:PROD-MastPeople>");
 foreach($prodStaffThisIssue as $job){
 		jobEcho($job, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", "; ");
 }
@@ -166,5 +173,5 @@ jobEcho($lastJob, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", ".\r");
 
 //Echo's the copyright and whatever at the bottom. Makes sure the year is correct.
 $currentyear=date("Y");
-echo "<ParaStyle:PROD-MastBottom><cTypeface:Italic>The Tech<cTypeface:> (ISSN 0148-9607) is published on Tuesdays and Fridays during the academic year (except during MIT vacations), Wednesdays during January, and monthly during the summer by The Tech, Room W20-483, 84 Massachusetts Avenue, Cambridge, Mass. 02139. Subscriptions are $50.00 per year (third class). <cTypeface:Bold><cCase:All Caps>Postmaster:<cCase:><cTypeface:> Please send all address changes to our mailing address: The Tech, P.O. Box 397029, Cambridge, Mass. 02139-7029. <cTypeface:Bold><cCase:All Caps>Telephone:<cCase:><cTypeface:> Editorial: (617) 253-1541. Business: (617) 258-8324. Facsimile: (617) 258-8226. <cTypeface:Italic>Advertising, subscription, and typesetting rates available.<cTypeface:> Entire contents <cTypeface:Bold Italic><0x00A9> $currentyear The Tech<cTypeface:>. <cTypeface:Italic>Printed on recycled paper by Mass Web Printing Company.<cTypeface:>"
+specialEcho("<ParaStyle:PROD-MastBottom><cTypeface:Italic>The Tech<cTypeface:> (ISSN 0148-9607) is published on Tuesdays and Fridays during the academic year (except during MIT vacations), Wednesdays during January, and monthly during the summer by The Tech, Room W20-483, 84 Massachusetts Avenue, Cambridge, Mass. 02139. Subscriptions are $50.00 per year (third class). <cTypeface:Bold><cCase:All Caps>Postmaster:<cCase:><cTypeface:> Please send all address changes to our mailing address: The Tech, P.O. Box 397029, Cambridge, Mass. 02139-7029. <cTypeface:Bold><cCase:All Caps>Telephone:<cCase:><cTypeface:> Editorial: (617) 253-1541. Business: (617) 258-8324. Facsimile: (617) 258-8226. <cTypeface:Italic>Advertising, subscription, and typesetting rates available.<cTypeface:> Entire contents <cTypeface:Bold Italic>\xc2\xa9 $currentyear The Tech<cTypeface:>. <cTypeface:Italic>Printed on recycled paper by Mass Web Printing Company.<cTypeface:>");
 ?>
