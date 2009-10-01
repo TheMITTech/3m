@@ -12,6 +12,8 @@
     <th> Department </th>
     <th> Position </th>
     <th> Status </th>
+    <th> Email </th>
+    <th> Phone </th>
   </tr>
 <?php
 $email = $_GET["email"];
@@ -42,6 +44,8 @@ for ($i=0; $i < $num; $i++) {
 	$active=mysql_result($result,$i,"active");
 	$dept=mysql_result($result,$i,"dept");
 	$position=mysql_result($result,$i,"position");
+        $email = mysql_result($result, $i, "email"); 
+        $phone = mysql_result($result, $i, "phone"); 
 	$startdate=date('j F Y', mktime(0, 0, 0, substr($bdate,5,2), substr($bdate,8,2), substr($bdate,0,4)));
 	if (substr($edate, 0, 4)==0)
 		$stopdate="Present";
@@ -86,6 +90,7 @@ if ($currentmail){
 if (!$currentmail){
 	echo "<H2>Not Currently Receiving Any Mail</H2>";
 }
+
 */
 echo "<tr> <td>
 $startdate - $stopdate
@@ -98,6 +103,12 @@ $position
 </td>
 <td>
 $status
+</td>
+<td>
+$email
+</td>
+<td>
+$phone
 </td>
 </tr>";
 }

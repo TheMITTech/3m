@@ -193,14 +193,13 @@ $currentyear=date("Y");
 Tuesdays and Fridays during the academic year (except during MIT
 vacations), Wednesdays during January, and monthly during the summer by
 The Tech, Room W20-483, 84 Massachusetts Avenue, Cambridge, Mass. 02139.
-Subscriptions are $45.00 per year (third class) and $105.00 (first
-class).  <strong>Postmaster:</strong> Please send all address changes to
+Subscriptions are $50.00 per year (third class).  <strong>Postmaster:</strong> Please send all address changes to
 our mailing address: The Tech, P.O. Box 397029, Cambridge, Mass.
 02139-7029.  <strong>Telephone:</strong> Editorial: (617)&nbsp;253-1541.
 Business: (617)&nbsp;258-8324. Facsimile: (617)&nbsp;258-8226.
 <em>Advertising, subscription, and typesetting rates available.</em>
 Entire contents <strong>&copy;&nbsp;<?php echo "$currentyear"; ?> The Tech</strong>. <em>Printed
-on recycled paper by Saltus Press.</em></p>
+on recycled paper by Mass Web Printing Company.</em></p>
 
 <p id="last-updated">This masthead was last updated on <?php echo date("F j, Y"); ?>.</p>
 

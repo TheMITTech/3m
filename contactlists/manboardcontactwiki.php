@@ -17,7 +17,7 @@ for ($i=0; $i < $num; $i++) {
 		$phone="(" . substr($phone,0,3) . ") " . substr($phone,3,3) . "-" . substr($phone,6);
 	}
 	$aim=mysql_result($result,$i,"aim");
-	if ((substr($position,0,9)!="Associate")&&(substr($position,0,6)!="Senior")&&((substr($position,-7,7)=="Manager")||(substr($position,-6,6)=="Editor")||($position=="Editor in Chief")||($position=="Chairman")||($position=="Director")||($dept=="Advisory Board"))){
+	if ((substr($position,0,9)!="Associate")&&((substr($position,0,6)=="Senior")||(substr($position,-7,7)=="Manager")||(substr($position,-6,6)=="Editor")||($position=="Editor in Chief")||($position=="Chairman")||($position=="Director")||($position=="News and Features Director")||($dept=="Advisory Board"))){
 		echo "|-\n";
 		echo "| [[$first $middle $last]] || [[$dept]] || $position || [mailto:$email $email] || $phone || $aim\n";
 		}
