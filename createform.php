@@ -4,7 +4,9 @@ $mod = $_GET["mod"];
 $email = $_GET["email"];
 echo'
 <html>
-<head>';
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+';
 if ($mod==1){
 	echo '<title>The Tech Staff Modification Page</title>';
 $query="SELECT *  FROM `bio` WHERE `email` = \"$email\" AND `active` = 1";

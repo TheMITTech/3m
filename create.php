@@ -43,10 +43,11 @@ if($_POST["delete"] != "Deactive me!") {
 ?>
 <html>
 <head>
-<meta http-equiv="refresh" content="3; url=/3m/">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="refresh" content="3; url=.">
 </head>
 <body>
 You have successfully modified the staff system. If, instead, you have fucked it up, e-mail tenman@the-tech.mit.edu.<br>
-<a href="/3m/"> Click here to go back</a>
+<a href="."> Click here to go back</a>
 </body>
 </html>
