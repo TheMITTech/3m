@@ -2,6 +2,7 @@
 include 'config.php';
 header('Content-type: text/plain; charset="UTF-16BE"');
 header('Content-Disposition: attachment; filename=dynamicmarkmast.txt');
+echo("\xfe\xff");
 specialEcho("<UNICODE-MAC>\r");
 // These define a bunch of variables that should be changed if the format of the mast changes
 $nameSeperator=",";
@@ -142,14 +143,14 @@ $prodStaffThisIssue=array_pop($mastArray);
 $adBoard=array_pop($mastArray);
 array_shift($adBoard); //This takes off the blank print name
 foreach($executiveBoard as $job){
-	jobEcho($job, "<ParaStyle:PROD-MastTop><cTypeface:Bold>", "<cTypeface:>\x0A", "", "\n", "", "\r"); //Echos ExecBoard; Uses the jobEcho with special formatting
+	jobEcho($job, "<ParaStyle:PROD-Misc\:MAST\:PROD-MastTop><cTypeface:Bold>", "<cTypeface:>\x0A", "", "\n", "", "\r"); //Echos ExecBoard; Uses the jobEcho with special formatting
 }
 
 foreach($mastArray as $dept){
 	$printDept=array_shift($dept);
-	specialEcho("<ParaStyle:PROD-MastDept>$printDept\r"); //Echos the department name
+	specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastDept>$printDept\r"); //Echos the department name
 	$lastJob=array_pop($dept); //Last job will have special formatting (IE a period) so it's removed from the queue
-	specialEcho("<ParaStyle:PROD-MastPeople>");
+	specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastPeople>");
 	foreach($dept as $job){
 		jobEcho($job, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", "; ");
 	}
@@ -158,14 +159,14 @@ foreach($mastArray as $dept){
 
 foreach($adBoard as $job){
 	$job[0]=substr($job[0], 0, -1); //Normally, adboard would get an "s" attached to the end; this suppresses it
-	jobEcho($job, "<ParaStyle:PROD-MastDept>", "\r<ParaStyle:PROD-MastPeople>", "", ", ", "", ".\r"); //Special Adboard formatting
+	jobEcho($job, "<ParaStyle:PROD-Misc\:MAST\:PROD-MastDept>", "\r<ParaStyle:PROD-Misc\:MAST\:PROD-MastPeople>", "", ", ", "", ".\r"); //Special Adboard formatting
 }
 
 //This is effectively a normal department echo, except that it fixes the department title so that it's "Production Staff for This Issue" instead of just "Produciton Staff"
 $printDept=array_shift($prodStaffThisIssue)." for This Issue";
-specialEcho("<ParaStyle:PROD-MastDept>$printDept\r");
+specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastDept>$printDept\r");
 $lastJob=array_pop($prodStaffThisIssue);
-specialEcho("<ParaStyle:PROD-MastPeople>");
+specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastPeople>");
 foreach($prodStaffThisIssue as $job){
 		jobEcho($job, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", "; ");
 }
@@ -173,5 +174,5 @@ jobEcho($lastJob, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", ".\r");
 
 //Echo's the copyright and whatever at the bottom. Makes sure the year is correct.
 $currentyear=date("Y");
-specialEcho("<ParaStyle:PROD-MastBottom><cTypeface:Italic>The Tech<cTypeface:> (ISSN 0148-9607) is published on Tuesdays and Fridays during the academic year (except during MIT vacations), Wednesdays during January, and monthly during the summer by The Tech, Room W20-483, 84 Massachusetts Avenue, Cambridge, Mass. 02139. Subscriptions are $50.00 per year (third class). <cTypeface:Bold><cCase:All Caps>Postmaster:<cCase:><cTypeface:> Please send all address changes to our mailing address: The Tech, P.O. Box 397029, Cambridge, Mass. 02139-7029. <cTypeface:Bold><cCase:All Caps>Telephone:<cCase:><cTypeface:> Editorial: (617) 253-1541. Business: (617) 258-8324. Facsimile: (617) 258-8226. <cTypeface:Italic>Advertising, subscription, and typesetting rates available.<cTypeface:> Entire contents <cTypeface:Bold Italic>\xc2\xa9 $currentyear The Tech<cTypeface:>. <cTypeface:Italic>Printed on recycled paper by Mass Web Printing Company.<cTypeface:>");
+specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastBottom><cTypeface:Italic>The Tech<cTypeface:> (ISSN 0148-9607) is published on Tuesdays and Fridays during the academic year (except during MIT vacations), Wednesdays during January, and monthly during the summer by The Tech, Room W20-483, 84 Massachusetts Avenue, Cambridge, Mass. 02139. Subscriptions are $50.00 per year (third class). <cTypeface:Bold><cCase:All Caps>Postmaster:<cCase:><cTypeface:> Please send all address changes to our mailing address: The Tech, P.O. Box 397029, Cambridge, Mass. 02139-7029. <cTypeface:Bold><cCase:All Caps>Telephone:<cCase:><cTypeface:> Editorial: (617) 253-1541. Business: (617) 258-8324. Facsimile: (617) 258-8226. <cTypeface:Italic>Advertising, subscription, and typesetting rates available.<cTypeface:> Entire contents <cTypeface:Bold Italic>\xc2\xa9 $currentyear The Tech<cTypeface:>. <cTypeface:Italic>Printed on recycled paper by Mass Web Printing Company.<cTypeface:>");
 ?>
