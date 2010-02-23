@@ -1,28 +1,31 @@
 <?php
 include 'config.php';
-$first = $_POST["first"];
-$middle = $_POST["middle"];
-$last = $_POST["last"];
-$email = $_POST["email"];
-$class = $_POST["class"];
-$gender = $_POST["gender"];
-$department = $_POST["department"];
-$job = $_POST["job"];
-$email = $_POST["email"];
-$month = $_POST["month"];
-$day = $_POST["day"];
-$year = $_POST["year"];
-$bmonth = $_POST["bmonth"];
-$bday = $_POST["bday"];
-$byear = $_POST["byear"];
+if(!isset($_POST["first"])) { // In case someone just goes to /create.php
+  fatal("Incomplete form data. Please use createform.php");
+}
+$first = mysql_real_escape_string($_POST["first"]);
+$middle = mysql_real_escape_string($_POST["middle"]);
+$last = mysql_real_escape_string($_POST["last"]);
+$email = mysql_real_escape_string($_POST["email"]);
+$class = mysql_real_escape_string($_POST["class"]);
+$gender = mysql_real_escape_string($_POST["gender"]);
+$department = mysql_real_escape_string($_POST["department"]);
+$job = mysql_real_escape_string($_POST["job"]);
+$email = mysql_real_escape_string($_POST["email"]);
+$month =mysql_real_escape_string( $_POST["month"]);
+$day = mysql_real_escape_string($_POST["day"]);
+$year = mysql_real_escape_string($_POST["year"]);
+$bmonth = mysql_real_escape_string($_POST["bmonth"]);
+$bday = mysql_real_escape_string($_POST["bday"]);
+$byear = mysql_real_escape_string($_POST["byear"]);
 /*
 $emonth = $_POST["emonth"];
 $eday = $_POST["eday"];
 $eyear = $_POST["eyear"];
 */
-$phone = $_POST["phone"];
-$aim = $_POST["aim"];
-$mod = $_POST["mod"];
+$phone = mysql_real_escape_string($_POST["phone"]);
+$aim = mysql_real_escape_string($_POST["aim"]);
+$mod = mysql_real_escape_string($_POST["mod"]);
 for ($i=0;$i<strlen($phone); $i++){
 	$currentdigit=substr($phone,$i,1);
 	if(is_numeric($currentdigit)){
