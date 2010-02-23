@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-if(!isset($_POST["first"])) { // In case someone just goes to /create.php
+if(!isset($_POST["email"]) || $_POST["email"] === "") { // In case someone just goes to /create.php
   fatal("Incomplete form data. Please use createform.php");
 }
 $first = mysql_real_escape_string($_POST["first"]);
