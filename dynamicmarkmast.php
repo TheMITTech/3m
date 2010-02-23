@@ -8,8 +8,6 @@ specialEcho("<UNICODE-MAC>\r");
 $nameSeperator=",";
 $jobSeperator=";";
 $sectionSeperator=".";
-$gradYear=0;
-$blankYear=9999;
 $quoteSymbol="\xe2\x80\x99"; // this is the UTF8 for the symbol. we are going to build huge magical UTF8 strings that include this symbol and later we are going to turn them into UTF16 along with all their little character friends
 
 // If turning your output into UTF16 strings by brute force
@@ -21,16 +19,18 @@ function specialEcho($string){
 
 // Takes a year and returns the appropriately formated data
 function CleanYear($year){
-	global $quoteSymbol, $blankYear, $gradYear;
+	global $quoteSymbol, $blankYear, $gradYear, $cmeYear;
 	// Two digits if they've got a year
-	if(($year!=$gradYear)&&($year!=$blankYear)){
+	if(($year!=$gradYear)&&($year!=$blankYear)&&($year!=$cmeYear)){
 		$twoDigits=substr($year,-2,2);
 		return(" $quoteSymbol$twoDigits");
 	}
 	// G if they're grad
 	if ($year==$gradYear) {
 		return(" G");
-	}
+	} elseif ($year==$cmeYear) {
+          return(" CME");
+        }
 	// Default is blank
 	else{
 		return("");

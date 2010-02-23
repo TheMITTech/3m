@@ -26,6 +26,9 @@ $eyear = $_POST["eyear"];
 $phone = mysql_real_escape_string($_POST["phone"]);
 $aim = mysql_real_escape_string($_POST["aim"]);
 $mod = mysql_real_escape_string($_POST["mod"]);
+if(($class!=$gradYear)&&($class!=$cmeYear)&&($class!=$blankYear)&&($class<$minYear||$class>$maxYear)) {
+  fatal("Invalid class year: $class");
+}
 for ($i=0;$i<strlen($phone); $i++){
 	$currentdigit=substr($phone,$i,1);
 	if(is_numeric($currentdigit)){

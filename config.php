@@ -4,6 +4,11 @@ $user = '3m';
 $password = 'pleaseChangeMeS00n';
 $dbnames = 'tt';
 $dbdepts = 'ttdepartments';
+$gradYear=0;
+$cmeYear=9998;
+$blankYear=9999;
+$minYear=1881;
+$maxYear=2038; // If 3m isn't redone before Unix time rolls over, then fuck you!
 @mysql_connect("$host","$user","$password") or fatal("Error connecting to server. Please contact an admin.");
 mysql_query('SET NAMES utf8'); // This line lets us use "Renee"
 function mysqlquery($db, $query){

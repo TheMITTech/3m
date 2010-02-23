@@ -24,22 +24,22 @@ EOF
 $nameSeperator=",";
 $jobSeperator=";";
 $sectionSeperator=".";
-$gradYear=0;
-$blankYear=9999;
 $quoteSymbol="&rsquo;";
 
 // Takes a year and returns the appropriately formated data
 function CleanYear($year){
-	global $quoteSymbol, $blankYear, $gradYear;
+	global $quoteSymbol, $blankYear, $gradYear, $cmeYear;
 	// Two digits if they've got a year
-	if(($year!=$gradYear)&&($year!=$blankYear)){
+	if(($year!=$gradYear)&&($year!=$blankYear)&&($year!=$cmeYear)){
 		$twoDigits=substr($year,-2,2);
 		return(" $quoteSymbol$twoDigits");
 	}
 	// G if they're grad
 	if ($year==$gradYear) {
 		return(" G");
-	}
+        } elseif ($year==$cmeYear) {
+          return(" CME");
+        }
 	// Default is blank
 	else{
 		return("");

@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 $mod = $_GET["mod"];
-$email = $_GET["email"];
+$email = mysql_real_escape_string($_GET["email"]);
 echo'
 <html>
 <head>
@@ -192,7 +192,10 @@ echo'<form method="post" action="create.php">
     </tr>
     <tr>
       <td><div align="center">E-Mail Address </div></td>
-      <td><div align="center">Year</div></td>
+      <td><div align="center">Class Year (YYYY)
+      <font size="1"><br />0 for Grad
+      <br />9998 for CME
+      <br />9999 for no year</font></div></td>
       <td><div align="center">Gender</div></td>
     </tr>
     <tr>
