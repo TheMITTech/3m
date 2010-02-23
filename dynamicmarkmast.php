@@ -168,7 +168,7 @@ specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastDept>$printDept\r");
 $lastJob=array_pop($prodStaffThisIssue);
 specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastPeople>");
 foreach($prodStaffThisIssue as $job){
-		jobEcho($job, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", "; ");
+		jobEcho($job, "<cTypeface:Bold>", ":<cTypeface:> ", "@@", "@@, ", "@@", "@@; ");
 }
 jobEcho($lastJob, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", ".\r");
 
