@@ -168,9 +168,9 @@ specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastDept>$printDept\r");
 $lastJob=array_pop($prodStaffThisIssue);
 specialEcho("<ParaStyle:PROD-Misc\:MAST\:PROD-MastPeople>");
 foreach($prodStaffThisIssue as $job){
-		jobEcho($job, "<cTypeface:Bold>", ":<cTypeface:> ", "@@", "@@, ", "@@", "@@; ");
+		jobEcho(array($job[0], array("@@")), "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", "; ");
 }
-jobEcho($lastJob, "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", ".\r");
+jobEcho(array($lastJob[0], array("@@")), "<cTypeface:Bold>", ":<cTypeface:> ", "", ", ", "", ".\r");
 
 //Echo's the copyright and whatever at the bottom. Makes sure the year is correct.
 $currentyear=date("Y");
