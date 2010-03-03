@@ -14,16 +14,10 @@
     <td colspan="4"><a href="dynamichtmlmast.php">HTML Masthead</a></td>
   </tr>
   <tr>
-    <td colspan="4"><a href="contactlists/manboardcontact.php">Manboard Contact List</a></td>
+    <td colspan="4"><a href="manboardcontact.php">Manboard Contact List</a></td>
   </tr>
   <tr>
-    <td colspan="4"><a href="contactlists/alleditcontact.php">All Editors</a></td>
-  </tr>
-  <tr>
-    <td colspan="4"><a href="contactlists/allactivemail.php">All Active Members</a></td>
-  </tr>
-  <tr>
-    <td colspan="4"><a href="contactlists/everyonemail.php">Everyone's Email List</a></td>
+    <td colspan="4"><a href="everyonemail.php">Everyone's Email List</a></td>
   </tr>
   <tr>
     <td colspan="4"><a href="createform.php">Create New User</a></td>

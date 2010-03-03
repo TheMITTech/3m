@@ -1,5 +1,5 @@
 <?php
-include '../config.php';
+include 'config.php';
 ?>
 <html>
 <head><title>The Tech Manboard Contact List</title></head>
