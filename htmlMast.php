@@ -31,7 +31,7 @@ function formatDepartment($name, $positions) {
   }
   $folded = join(";\n", $folded);
   return "<div class='department'><h2>$name</h2>\n" .
-    "<div>$folded.\n</div>";
+    "<div>$folded.\n</div></div>";
 }
 $depts = getDepartments();
 // Exec board gets special formatting
