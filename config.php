@@ -1,23 +1,31 @@
 <?php
-$host = 'localhost:/var/mysql/mysql.sock';
-$user = '3m';
-$password = 'pleaseChangeMeS00n';
-$dbnames = 'tt';
-$dbdepts = 'ttdepartments';
-$gradYear=0;
-$cmeYear=9998;
-$blankYear=9999;
-$minYear=1881;
-$maxYear=2038; // If 3m isn't redone before Unix time rolls over, then fuck you!
-@mysql_connect("$host","$user","$password") or fatal("Error connecting to server. Please contact an admin.");
-mysql_query('SET NAMES utf8'); // This line lets us use "Renee"
-function mysqlquery($db, $query){
-  @mysql_select_db("$db") or fatal("Error opening database. Please contact an admin.");
-  $sqloutput=mysql_query("$query") or fatal("Query failed. Please retry.");
-  return $sqloutput;
-}
-function fatal($message) {
-  @header("HTTP/1.1 500 Internal Server Error");
-  die($message);
-}
-?>
+###############################################################################
+# The Tech's Masthead and Maillist Maintenance System (3M)
+#  (or Mast Maintenance and Mailing List System as it was originally 
+#  envisioned)
+#
+# Author: Zachary Ozer ’07 <zach@theozer.com>
+# Modifications by: Ricardo Ramirez <rram@the-tech.mit.edu>
+# 
+# $Id$
+#
+# Versions:
+# 1.0 - Proof of concept. Shat out a mast, but not much else.
+# 1.1 - Minor bug fixes, like sanity checks and string escaping.
+# 1.9 - Rewrite major portions so it doesn't look like a ITT Tech student 
+#       wrote it
+###############################################################################
+
+require_once 'MDB2.php';
+
+### Database constants
+$db_host = 'localhost';
+$db_user = '3m';
+$db_pass = 'pleaseChangeMeS00n';
+$db_name = '3m';
+
+### Class year constants
+$min_class_year = 1881;
+$max_class_year = 2038; # If 3m isn't redone before Unix time rolls, FUCK YOU!
+# For special people. Numbers map to relative position against other years
+$class_year_map = array(0 => 'G', 9998 => 'CME', 9999 => '');

@@ -1,11 +1,20 @@
 <?php
-include 'config.php';
-//$query="SELECT DISTINCT email FROM bio WHERE mail=1 ORDER BY email";
-$query="SELECT DISTINCT email FROM bio WHERE active=1 ORDER BY email";
-$result=mysqlquery($dbnames,$query);
-$num=mysql_numrows($result);
+###############################################################################
+# $Id$
+# Prints out a list of all addresses that should be subscribed to 
+# everyone@tech.mit.edu
+###############################################################################
+
+require_once dirname(__FILE__).'/common.php';
+
 header('Content-Type: text/plain');
-for ($i=0; $i < $num; $i++) {
-	$email=mysql_result($result,$i,"email");
-	echo "$email\n";
+$sql = "SELECT DISTINCT email FROM staff WHERE active='yes' ORDER BY email";
+$res =& $mdb2->query($sql);
+if(PEAR::isError($res)) {
+  error_log($res->getDebugInfo());
+  fatal("Could not get everyone@tt membership list: ".$res->getMessage());
+}
+$res->bindColumn('email', $email);
+while ($row =  $res->fetchRow()) {
+  echo "$email\n";
 }

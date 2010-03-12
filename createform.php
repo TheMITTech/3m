@@ -1,313 +1,211 @@
 <?php
-include 'config.php';
-$mod = $_GET["mod"];
-$email = mysql_real_escape_string($_GET["email"]);
-echo'
+###############################################################################
+# $Id$
+# UI to create.php
+###############################################################################
+
+require_once dirname(__FILE__).'/common.php';
+
+$isUpdate = isset($_GET["email"]);
+
+if ($isUpdate) {
+  $fields = array("first", "middle", "last", "display_name", "year", "gender",
+    "email", "dept", "position", "begin_date", "end_date", "athena_username", 
+    "birthday", "phone");
+  $sql = "SELECT " . join(", ", $fields) . " FROM staff WHERE email = ";
+  $sql .= $mdb2->quote($_GET["email"]) . " AND active = 'yes'";
+  $mdb2->setLimit(1);
+  $res =& $mdb2->query($sql);
+  if(PEAR::isError($res)) {
+    error_log($res->getDebugInfo());
+    fatal("Could not get information for $email: ".$res->getMessage());
+  }
+  foreach ($fields as $field) {
+    $res->bindColumn($field, $$field);
+  }
+  $row = $res->fetchRow();
+  $phone = formatPhone($phone);
+}
+?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-';
-if ($mod==1){
-	echo '<title>The Tech Staff Modification Page</title>';
-$query="SELECT *  FROM `bio` WHERE `email` = \"$email\" AND `active` = 1";
-$result=mysqlquery($dbnames,$query);
-$first = mysql_result($result,0,"first");
-$middle = mysql_result($result,0,"middle");
-$last = mysql_result($result,0,"last");
-$class = mysql_result($result,0,"year");
-$gender = mysql_result($result,0,"gender");
-$email = mysql_result($result,0,"email");
-$department = mysql_result($result,0,"dept");
-$job = mysql_result($result,0,"position");
-$bdate = mysql_result($result,0,"bdate");
-$edate = mysql_result($result,0,"edate");
-$birthday = mysql_result($result,0,"birthday");
-$phone = mysql_result($result,0,"phone");
-$aim = mysql_result($result,0,"aim");
-$gender = mysql_result($result,0,"gender");
-/*
-$eyear=substr($edate,2,2);
-$emonth=substr($edate,5,2);
-$eday=substr($edate,8,2);
-*/
-$year=substr($bdate,2,2);
-$month=substr($bdate,5,2);
-$day=substr($bdate,8,2);
-
-$byear=substr($birthday,2,2);
-$bmonth=substr($birthday,5,2);
-$bday=substr($birthday,8,2);
-if ($gender=='M'){
-	$male="checked";
-}
-else if ($gender=='F'){
-	$female="checked";
-}
-}
-else {
-	echo '<title>The Tech Staff Addition Page</title>';
-}
-echo'
-<SCRIPT LANGUAGE="JavaScript">
-depts = new Array(';
-$query="SHOW TABLES IN ttdepartments";
-$result=mysqlquery($dbdepts,$query);
-$num=mysql_numrows($result);
-for ($i=0; $i < $num; $i++) {
-	echo 'new Array(new Array("Please Select Position",0),';
-	$currentdept=mysql_result($result,$i);
-        // id #1 is actually the name of the department on the masthead
-        // but it should never be used for a staff member's position
-	$query="SELECT * FROM `$currentdept` where id != 1";
-	$deptresult=mysqlquery($dbdepts,$query);
-	$deptnum=mysql_numrows($deptresult);
-	for ($j=0; $j < $deptnum; $j++) {
-		$positions = mysql_result($deptresult,$j,"positions");
-		echo 'new Array("';
-		echo "$positions";
-		echo '","';
-		echo "$positions";
-		echo '"';		
-		if ($j==($deptnum-1)){
-			echo ')';
-		}
-		else {
-			echo '),';
-		}
-              }
-	if ($i==($num-1)){
-		echo ')';
-	}
-	else {
-		echo '),';
-	}
-
-}
-echo ');
-function fillSelectFromArray(selectCtrl, itemArray, goodPrompt, badPrompt, defaultItem) {
-var i, j;
-var prompt;
-// empty existing items
-for (i = selectCtrl.options.length; i >= 0; i--) {
-selectCtrl.options[i] = null; 
-}
-prompt = (itemArray != null) ? goodPrompt : badPrompt;
-if (prompt == null) {
-j = 0;
-}
-else {
-selectCtrl.options[0] = new Option(prompt);
-j = 1;
-}
-if (itemArray != null) {
-// add new items
-for (i = 0; i < itemArray.length; i++) {
-selectCtrl.options[j] = new Option(itemArray[i][0]);
-if (itemArray[i][1] != null) {
-selectCtrl.options[j].value = itemArray[i][1]; 
-}
-j++;
-}
-// select first item (prompt) for sub list
-selectCtrl.options[0].selected = true;
-   }
-}
-
-function init(dept, pos) {
-  var index=depts.length;
-  select = document.getElementById("selectDept");
-  for(i=0; i<select.options.length; i++) {
-    if(select.options[i].value == dept) {
-      select.selectedIndex = i;
-      index = i;
-    }
-  }
-  select = document.getElementById("selectPos");
-  fillSelectFromArray(select, depts[index-1]);
-  for(i=0; i<select.options.length; i++) {
-    if(select.options[i].value == pos) select.selectedIndex = i;
-  }
-}
-</script>
-</head>';
-if($mod == 1) {
-  echo "<body onload=\"init('$department', '$job');\" style='width: 50%'>";
-} else {
-  echo "<body style='width: 50%'>";
-}
-echo '<H1 align="center">The Tech</H1>';
-if ($mod==1){
-	echo '<H2 align="center">Staff Modification Page</H2>';
-}
-else {
-	echo '<H2 align="center">Staff Addition Page</H2>';
-}
-echo'<form method="post" action="create.php">
+<?php if ($isUpdate) { ?>
+<title>The Tech Staff Modification Page</title>
+<?php } else { ?>
+<title>The Tech Staff Addition Page</title>
+<?php } ?>
+<style type="text/css">
+td { padding:2px;text-align:center }
+</style>
+</head>
+<body style='margin:15px auto;padding:5px 20px;width:860px;'>
+<h1 align="center">The Tech</h1>
+<?php if ($isUpdate) { ?>
+<h2 align="center">Staff Modification Page</h2>
+<?php } else { ?>
+<h2 align="center">Staff Addition Page</h2>
+<?php } ?>
+<form method="post" action="./create.php">
   <table width="50%" border="0" align="center">
     <tr>
-      <td><div align="center">
-          <input type="text" size="15" maxlength="30" name="first" value="';
-	echo "$first";
-	echo '">
-        </div></td>
-      <td><div align="center">
-          <input type="text" size="15" maxlength="30" name="middle" value="';
-	echo "$middle";
-	echo '">
-        </div></td>
-      <td><div align="center">
-          <input type="text" size="15" maxlength="30" name="last" value="';
-	echo "$last";
-	echo '">
-        </div></td>
+    <td>
+      <input onkeyup="updateDisplayName()" type="text" size="15" maxlength="20" name="first" value="<?=$first?>">
+    </td>
+    <td>
+      <input onkeyup="updateDisplayName()" type="text" size="15" maxlength="20" name="middle" value="<?=$middle?>">
+    </td>
+    <td>
+      <input onkeyup="updateDisplayName()" type="text" size="15" maxlength="30" name="last" value="<?=$last?>">
+    </td>
     </tr>
     <tr>
-      <td><div align="center">First Name</div></td>
-      <td><div align="center">Middle Name</div></td>
-      <td><div align="center">Last Name</div></td>
+      <td>First Name</td>
+      <td>Middle Name</td>
+      <td>Last Name</td>
     </tr>
     <tr>
-      <td colspan="3">&nbsp;</td>
+      <td colspan="1">Display Name</td>
+      <td colspan="2">
+      <input onchange="flagDisplayNameChanged()" type="text" size="30" maxlength="50" name="display_name" value="<?=$display_name?>">
+      </td>
     </tr>
     <tr>
-      <td><div align="center">
-          <input type="text" size="20" maxlength="50" name="email" value="';
-	echo "$email";
-	echo '">
-        </div></td>
-      <td><div align="center">
-          <input type="text" size="3" maxlength="4" name="class" value="';
-	echo "$class";
-	echo '">
-        </div></td>
-      <td><div align="center"> Male
-          <input type="radio" value="Male" name="gender" ';
-	echo $male;
-	echo '">
-          Female
-          <input type="radio" value="Female" name="gender" ';
-	echo $female;
-	echo '">
-        </div></td>
+      <td>
+        <input onkeyup="updateAthenaUsername()" type="text" size="15" maxlength="20" name="email" value="<?=$email?>">
+      </td>
+      <td>
+        <input type="text" size="4" maxlength="4" name="year" value="<?=$year?>">
+      </td>
+      <td>
+        Male <input type="radio" value="Male" name="gender"<?=$gender=="male"?" checked":""?>><br/>
+        Female <input type="radio" value="Female" name="gender"<?=$gender=="female"?" checked":""?>>
+      </td>
     </tr>
     <tr>
-      <td><div align="center">E-Mail Address </div></td>
-      <td><div align="center">Class Year (YYYY)
+      <td>E-Mail Address</td>
+      <td>Class Year (YYYY)
       <font size="1"><br />0 for Grad
       <br />9998 for CME
-      <br />9999 for no year</font></div></td>
-      <td><div align="center">Gender</div></td>
+      <br />9999 for no year</font></td>
+      <td></td>
     </tr>
     <tr>
-      <td colspan="3">&nbsp;</td>
+      <td>
+        <select onchange="updateTitles()" name="dept">
+        <option<?=isset($dept)?"":" selected "?>></option>
+<?php foreach (getDepartments() as $department) { ?>
+        <option value="<?=$department?>"<?=($dept==$department)?" selected":""?>><?=$department?></option>
+<?php } ?>
+        </select>
+      </td>
+      <td>
+        <select name="position">
+<?php if(isset($dept)) { foreach (getDepartmentTitles($dept) as $title) { ?>
+        <option value="<?=$title?>"<?=($position==$title)?" selected":""?>><?=$title?></option>
+<?php } } else { ?>
+        <!-- This will be filled in with JavaScript -->
+        <option></option>
+<?php } ?>
+        </select>
+      </td>
+      <td>
+        <input type="text" name="begin_date" size="10" maxlength="10" value="<?=date("Y-m-d")?>">
+      </td>
     </tr>
     <tr>
-      <td><div align="center">
-         <SELECT ID="selectDept" NAME="department" onChange="fillSelectFromArray(this.form.job, ((this.selectedIndex == -1) ? null : depts[this.selectedIndex-1]));">
-<OPTION VALUE="-1">Select Department';
-$query="SHOW TABLES IN ttdepartments";
-$result=mysqlquery($dbdepts,$query);
-$num=mysql_numrows($result);
-for ($i=0; $i < $num; $i++) {
-	$currentdept=ucwords(mysql_result($result,$i));
-        // zozer thought the zzzzzz table is a good way to store the order
-        // of the departments on the masthead.
-        if($currentdept=='Zzzzzz') continue;
-	echo '<OPTION VALUE="';
-	echo "$currentdept";
-	echo '">';
-	echo "$currentdept";
-}
-echo '</SELECT>
-        </div></td>
-      <td><div align="center">
-<SELECT ID="selectPos" NAME="job">'."\n";
-echo '<OPTION></OPTION>';
-echo '</SELECT>
-
-        </div></td>
-      <td><div align="center">
-          <input type="text" size="2" maxlength="2" name="month" value="';
-	echo date('m');
-	echo '">
-          /
-          <input type="text" size="2" maxlength="2" name="day" value="';
-	echo date('d');
-	echo '">
-          /
-          <input type="text" size="2" maxlength="2" name="year" value="';
-	echo date('y');
-	echo '">
-        </div></td>
+      <td>Department</td>
+      <td>Job Title </td>
+      <td>Effective Date<br><font size=1>(YYYY-MM-DD)</font></td>
     </tr>
     <tr>
-      <td><div align="center">Department</div></td>
-      <td><div align="center">Job Title </div></td>
-      <td><div align="center">Effective Date (mm/dd/yy)</div></td>
+      <td>
+        <input type="text" name="birthday" size="10" maxlength="10" value="<?=$birthday?>">
+      </td>
+      <td>
+        <input type="text" size="15" maxlength="20" name="phone" value="<?=$phone?>">
+      </td>
+      <td>
+        <input onchange="flagAthenaUserChanged()" type="text" size="15" maxlength="20" name="athena_username" value="<?=$athena_username?>">
+      </td>
     </tr>
     <tr>
-      <td colspan="3">&nbsp;</td>
+      <td> Birthday<br><font size=1>(YYYY-MM-DD)</font></td>
+      <td> Phone Number<br><font size=1>(XXX-XXX-XXXX)</font></td>
+      <td> Athena Username</td>
     </tr>
-    <tr>
-      <td><div align="center">
-          <input type="text" size="2" maxlength="2" name="bmonth" value="';
-	echo "$bmonth";
-	echo '">
-          /
-          <input type="text" size="2" maxlength="2" name="bday" value="';
-	echo "$bday";
-	echo '">
-          /
-          <input type="text" size="2" maxlength="2" name="byear" value="';
-	echo "$byear";
-	echo '">
-        </div></td>
-      <td><div align="center">
-          <input type="text" size="20" maxlength="30" name="phone" value="';
-	echo "$phone";
-	echo '">
-        </div></td>
-      <td><div align="center">
-          <input type="text" size="20" maxlength="30" name="aim" value="';
-	echo "$aim";
-	echo '">
-        </div></td>
-    </tr>
-    <tr>
-      <td><div align="center"> Birthday (If you would like us to remember)</div></td>
-      <td><div align="center"> Phone Number (digits only, please)</div></td>
-      <td><div align="center"> Screenname</div></td>
-    </tr>
-<!--    <tr>
-     <td colspan="3"><div align="center">
-          <input type="text" size="2" maxlength="2" name="emonth" value="';
-	echo date('m');
-	echo '">
-          /
-          <input type="text" size="2" maxlength="2" name="eday" value="';
-	$etempdate=date('d')-1;
-	echo "";
-	echo '">
-          /
-          <input type="text" size="2" maxlength="2" name="eyear" value="';
-	echo date('y');
-	echo '">
-        </div></td>
-</tr>
-    <tr>
-     <td colspan="3"><div align="center">
-End Date
-</td>
-</tr>
--->
-  </table>';
-  if ($mod==1){
-	echo '<input type="hidden" name="mod" value="1">';
-	}
-	echo'<p align="center">
+  </table>
+<?php if ($isUpdate) { ?>
+  <input type="hidden" name="update" value="yes, motherfucker">
+<?php } ?>
+    <p align="center">
+    <input style="margin-right:10%" type="reset" value="Reset">
     <input type="submit" value="Submit" name="submit">
-    <input style="float:right" type="submit" value="Deactive me!" name="delete">
+    <input style="margin-left:10%" type="submit" value="Deactive me!" name="delete">
   </p>
   <br>
-</form>';
-?>
+</form>
+<form method="get" action="./">
+<input style="width:50%;margin-left:25%;margin-right:25%" type="submit" value="Cancel">
+</form>
+</body>
+<script type="text/javascript" language="javascript">
+var displayNameModified = false;
+var athenaUserModified  = false;
+
+function updateDisplayName() {
+  if(!displayNameModified) {
+    var first = document.getElementsByName("first")[0].value;
+    var middle= document.getElementsByName("middle")[0].value;
+    var last  = document.getElementsByName("last")[0].value;
+
+    var name = first + " ";
+    if(middle.length != 0) {
+      name += middle.charAt(0) + ". ";
+    }
+    name += last;
+
+    document.getElementsByName("display_name")[0].value = name;
+  }
+  return true;
+}
+
+function flagDisplayNameChanged() {
+  displayNameModified = true;
+}
+
+function updateAthenaUsername() {
+  if(!athenaUserModified) {
+    var email = document.getElementsByName("email")[0].value;
+    var i = email.indexOf("@mit.edu",1);
+    if(i != 0) {
+      document.getElementsByName("athena_username")[0].value = email.substring(0,i);
+    }
+  }
+  return true;
+}
+
+function flagAthenaUserChanged() {
+  athenaUserModified = true;
+}
+
+function updateTitles() {
+  var url = "./json.php?0=getDepartmentTitles&1=";
+  url += document.getElementsByName("dept")[0].value;
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else { // IE6 and IE 5
+    alert("Get rid of your stanky old shit. http://www.getfirefox.com/");
+    return false;
+  }
+  xmlhttp.open("GET",url,false);
+  xmlhttp.send(null);
+  var titles = JSON.parse(xmlhttp.responseText);
+  var html = "";
+  for (t in titles) {
+    html += "<option value='" + titles[t] + "'>" + titles[t] + "</option>\n";
+  }
+  document.getElementsByName("position")[0].innerHTML = html;
+}
+</script>
+</html>

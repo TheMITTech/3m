@@ -1,34 +1,38 @@
-<?php
-include 'config.php';
+<?php 
+###############################################################################
+# $Id$
+# Displays the manboard contact list
+###############################################################################
+
+require_once dirname(__FILE__).'/common.php';
+
+$sql ="SELECT display_name, dept, position, email, phone FROM staff JOIN ";
+$sql .= "departments ON (staff.dept=departments.name) JOIN titles ON (staff.";
+$sql .= "position=titles.name) WHERE active='yes' and titles.isManboard=";
+$sql .= "'yes' ORDER BY departments.order, titles.order, staff.last ASC";
+$res =& $mdb2->query($sql);
+if(PEAR::isError($res)) {
+  error_log($res->getDebugInfo());
+  fatal("Could not get manboard members: " . $res->getMessage());
+}
+$res->bindColumn("display_name", $name);
+$res->bindColumn("dept", $dept);
+$res->bindColumn("position", $position);
+$res->bindColumn("email", $email);
+$res->bindColumn("phone", $phone);
 ?>
 <html>
 <head><title>The Tech Manboard Contact List</title></head>
 <body>
 <H1 align="center">The Tech</H1>
 <H2 align="center">Manboard Contact List</H2>
-<table align="center"><th>Name</th><th>Department</th><th>Position</th><th>E-mail</th><th>Phone</th><th>AIM</th>
-<?php
-$query="SELECT * FROM bio WHERE active=1 ORDER BY dept, position, last";
-$result=mysqlquery($dbnames,$query);
-$num=mysql_numrows($result);
-$adboard="";
-for ($i=0; $i < $num; $i++) {
-	$first=mysql_result($result,$i,"first");
-	$middle=mysql_result($result,$i,"middle");
-	$last=mysql_result($result,$i,"last");
-	$dept=mysql_result($result,$i,"dept");
-	$position=mysql_result($result,$i,"position");
-	$email=mysql_result($result,$i,"email");
-	$phone=mysql_result($result,$i,"phone");
-	$aim=mysql_result($result,$i,"aim");
-	if ((substr($position,0,9)!="Associate")&&((substr($position,0,6)=="Senior")||(substr($position,-7,7)=="Manager")||(substr($position,-6,6)=="Editor")||($position=="Editor in Chief")||($position=="Chairman")||($position=="Director")||($position=="News and Features Director"))){
-		echo "<tr> <td>$first $middle $last</td><td>$dept</td><td>$position</td><td><a href=mailto:$email>$email</a></td><td>$phone</td><td>$aim</td></tr>";
-	}
-	if ($dept=="Advisory Board"){
-		$adboard="$adboard<tr> <td>$first $middle $last</td><td>$dept</td><td>$position</td><td><a href=mailto:$email>$email</a></td><td>$phone</td><td>$aim</td></tr>";
-	}
-}
-echo $adboard;
-?>
+<table align="center">
+<tr>
+  <th>Name</th><th>Department</th><th>Position</th><th>E-mail</th> <th>Phone</th>
+<?php $i=0; while ($row = $res->fetchRow()) { ?>
+<tr<?=$i%2==0 ? '' : ' style="background-color:#f0f0f0"';$i++?>>
+<td><?=$name?></td><td><?=$dept?></td><td><?=$position?></td><td><a href="mailto:<?=$email?>"><?=$email?></a></td><td><?=formatPhone($phone)?></td></tr>
+</tr>
+<?php } ?>
 </table>
 </body></html>
