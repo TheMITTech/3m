@@ -21,7 +21,7 @@ $row = $res->fetchRow();
 $name = $row[0];
 $email= $row[1];
 $phone= preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $row[2]);
-$bday = date($fmt, $row[3]);
+$birthday = $row[3] == 0 ? "Not set" : date($fmt, $row[3]);
 
 // Get each position's information
 $sql = "SELECT dept, position, UNIX_TIMESTAMP(begin_date) as begin_date, ";
@@ -47,7 +47,7 @@ $res->bindColumn('end_date', $end_date, 'integer');
   <table>
     <tr><th>E-mail</th><td><?=$email?></td>
     <tr><th>Phone</th><td><?=$phone?></td>
-    <tr><th>Birthday</th><td><?=$bday?></td>
+    <tr><th>Birthday</th><td><?=$birthday?></td>
   <body>
     <table>
     <tr>

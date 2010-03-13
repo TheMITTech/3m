@@ -32,6 +32,14 @@ if(isset($_POST["begin_date"])) {
   }
   $_POST["begin_date"] = date("Y-m-d", $timestamp);
 }
+if(isset($_POST["birthday"])) {
+  $timestamp = strtotime($_POST["birthday"]);
+  if($timestamp === FALSE) {
+    $_POST["birthday"] = ''; // Not a fatal error, just unset the birthday
+  } else {
+    $_POST["birthday"] = date("Y-m-d", $timestamp);
+  }
+}
 
 // Validation complete. If this is an update, disable their old information
 if (isset($_POST['update'])) {
