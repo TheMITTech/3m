@@ -20,9 +20,13 @@ require_once 'MDB2.php';
 
 ### Database constants
 $db_host = 'localhost';
-$db_user = '3m';
-$db_pass = 'pleaseChangeMeS00n';
-$db_name = '3m';
+$db_user = "3m";
+$db_pass = "pleaseChangeMeS00n";
+$db_name = "3m";
+
+#$db_user = 'developer';
+#$db_pass = 'devpass';
+#$db_name = '3m_dev';
 
 ### Class year constants
 $min_class_year = 1881;

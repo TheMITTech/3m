@@ -45,9 +45,11 @@ $res->bindColumn('end_date', $end_date, 'integer');
 </head>
   <h1 align="center">Staff History Report for <?=$name?></h1>
   <table>
-    <tr><th>E-mail</th><td><?=$email?></td>
-    <tr><th>Phone</th><td><?=$phone?></td>
-    <tr><th>Birthday</th><td><?=$birthday?></td>
+    <tr><td colspan=2><a href="./">&lt;&lt; Go Back to Main Page</a></td></tr>
+    <tr><th style='text-align: right'>E-mail:</th><td><?=$email?></td>
+    <tr><th style='text-align: right'>Phone:</th><td><?=$phone?></td>
+    <tr><th style='text-align: right'>Birthday:</th><td><?=$birthday?></td>
+    <tr><th style='text-align: right'>Facebook:</th><td><a href="http://www.facebook.com/search/?q=<?=$name?>">Search for Them</a></td>
   <body>
     <table>
     <tr>
