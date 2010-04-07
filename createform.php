@@ -25,7 +25,7 @@ if ($isUpdate) {
   }
   $row = $res->fetchRow();
   $phone = formatPhone($phone);
-  if($birthday = '0000-00-00') { $birthday = ''; }
+  if($birthday == '0000-00-00') { $birthday = ''; }
 }
 ?>
 <html>
