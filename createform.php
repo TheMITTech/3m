@@ -73,7 +73,7 @@ td { padding:2px;text-align:center }
     </tr>
     <tr>
       <td>
-        <input onkeyup="updateAthenaUsername()" type="text" size="15" maxlength="20" name="email" value="<?=$email?>">
+        <input onkeyup="updateAthenaUsername()" type="text" size="15" maxlength="50" name="email" value="<?=$email?>">
       </td>
       <td>
         <input type="text" size="4" maxlength="4" name="year" value="<?=$year?>">
