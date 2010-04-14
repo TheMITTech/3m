@@ -19,7 +19,7 @@ foreach($required as $reqval) {
     fatal("Required field is empty: $reqval.");
   }
 }
-if(isset($_POST["year"]) && formatYear($_POST["year"]) == NULL) {
+if(isset($_POST["year"]) && formatYear($_POST["year"]) === NULL) {
   fatal("Invalid class year: " . $_POST["year"]);
 }
 if(isset($_POST["phone"])) {
