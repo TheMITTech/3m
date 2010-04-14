@@ -10,7 +10,7 @@ $email = $_GET["email"];
 $fmt = "j F Y";
 
 // Get information for the header
-$sql = "SELECT display_name, email, phone, UNIX_TIMESTAMP(birthday) FROM staff ";
+$sql = "SELECT display_name, email, phone, birthday FROM staff ";
 $sql .= "WHERE active='yes' AND email=".$mdb2->quote($email);
 $res =& $mdb2->query($sql);
 if(PEAR::isError($res)) {
@@ -21,7 +21,7 @@ $row = $res->fetchRow();
 $name = $row[0];
 $email= $row[1];
 $phone= preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $row[2]);
-$birthday = $row[3] == 0 ? "Not set" : date($fmt, $row[3]);
+$birthday = $row[3] == 0 ? "Not set" : date($fmt, strtotime($row[3]));
 
 // Get each position's information
 $sql = "SELECT dept, position, UNIX_TIMESTAMP(begin_date) as begin_date, ";
