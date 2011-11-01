@@ -10,7 +10,7 @@ require_once dirname(__FILE__).'/common.php';
 function formatPosition($title, $members) {
   $seperator = ",\n";
   if ($title == '') return join($seperator, $members); // For AdBoard
-  if (sizeof($members) > 1 and $title != 'Staff') {
+  if (sizeof($members) > 1 and !preg_match("/Staff$/", $title)) {
     $title = $title . (substr($title, -1) == "s" ? "es" : "s");
   }
   return "<b>$title:</b>\n" . join($seperator, $members);
