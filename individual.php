@@ -11,7 +11,13 @@ $fmt = "j F Y";
 
 // Get information for the header
 $sql = "SELECT display_name, email, phone, birthday FROM staff ";
-$sql .= "WHERE active='yes' AND email=".$mdb2->quote($email);
+$sql .= "WHERE ";
+# Removed limitation to active staff members  -- email addreses
+# are ~never recycled given an IS&T policy decision in the late 1990s,
+# so, there is no fear of confusion. This makes it possible to more easily
+# see history of departed staff.
+# $sql .= "active='yes' AND ";
+$sql .= "email=".$mdb2->quote($email);
 $res =& $mdb2->query($sql);
 if(PEAR::isError($res)) {
   error_log($res->getDebugInfo());
