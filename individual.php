@@ -18,6 +18,7 @@ $sql .= "WHERE ";
 # see history of departed staff.
 # $sql .= "active='yes' AND ";
 $sql .= "email=".$mdb2->quote($email);
+$sql .= " ORDER BY active ASC";
 $res =& $mdb2->query($sql);
 if(PEAR::isError($res)) {
   error_log($res->getDebugInfo());
