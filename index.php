@@ -40,6 +40,9 @@ $res->bindColumn('email', $email);
   <tr>
     <td colspan="4"><a href="everyonemail.php">Everyone's Email List</a></td>
   </tr>
+  <tr>
+    <td colspan="4"><a href="everyonephone.php">Everyone's Phone Number List</a></td>
+  </tr>
 <?php while ($row = $res->fetchRow()) { ?>
   <tr>
   <td><?=$name?></td> <td><!--dept--></td> <td><!--$position--></td> 
