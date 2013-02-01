@@ -56,7 +56,15 @@ function getDepartmentMembers($department) {
 
   $ret = array();
   while ($row = $res->fetchRow()) {
-    $person = trim("$name " . formatYear($year)); //trim off space if no year
+    $formattedYear = formatYear($year);
+    if ($formattedYear) {
+      $person = $name .
+        mb_convert_encoding('&nbsp;', 'UTF-8', 'HTML-ENTITIES') .
+	formatYear($year);
+    } else {
+      //trim off space if no year
+      $person = $name;
+    }
     if(isset($ret[$position])) {
       array_push($ret[$position], $person);
     } else {
