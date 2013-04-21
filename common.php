@@ -41,10 +41,16 @@ function formatPhone($phone) {
 # i.e. "Position" => array("Tech Staffer ’81", "Been There Done That Colen"); 
 function getDepartmentMembers($department) {
   global $mdb2;
-  $sql = 'SELECT display_name, year, position FROM staff JOIN departments ON (';
-  $sql .= 'staff.dept=departments.name) JOIN titles ON (staff.position=titles.';
-  $sql .= 'name) WHERE staff.dept='.$mdb2->quote($department).' AND ';
-  $sql .= 'staff.active = "yes" ORDER BY titles.order, staff.year, staff.last ASC';
+  $dquote = $mdb2->quote($department);
+  $sql = <<<EOF
+SELECT display_name, year, position FROM staff
+JOIN departments ON (staff.dept=departments.name)
+JOIN titles ON (staff.position=titles.name)
+WHERE
+  staff.dept=$dquote AND 
+  staff.active = "yes"
+ORDER BY titles.order, staff.year, staff.last, staff.first, staff.middle ASC
+EOF;
   $res =& $mdb2->query($sql);
   if(PEAR::isError($res)) {
     error_log($res->getDebugInfo());
