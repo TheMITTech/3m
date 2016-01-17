@@ -72,8 +72,8 @@ foreach ($depts as $dept) {
 $currentyear=date("Y");
 ?>
 <p id="bottom-matter"><i>The Tech</i> (ISSN 0148-9607) is published on
-Tuesdays and Fridays during the academic year (except during MIT
-vacations), Wednesdays during January, and monthly during the summer by
+Thursdays during the academic year (except during MIT
+vacations) and monthly during the summer by
 The Tech, Room W20-483, 84 Massachusetts Avenue, Cambridge, Mass. 02139.
 Subscriptions are $50.00 per year (third class). <strong>Postmaster:</strong> 
 Please send all address changes to our mailing address: The Tech, P.O. Box 
