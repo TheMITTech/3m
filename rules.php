@@ -8,7 +8,7 @@
   <body>
     <h1>Email Rules</h1>
     <table border="5">
-    <a href="./">Exit Email System</a>
+    <a href="./">Return to 3m</a>
    <tr style="font-weight:bold;"><td>Department</td><td>Position</td><td>Add-list</td><td>Notification List</td><td></td></tr>
     <?php
        $fields = array("ruleid", "dept", "position", "addlist", "notificationlist");
