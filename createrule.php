@@ -1,7 +1,7 @@
 <?php
 ###############################################################################
 # $Id$
-# UI to create.php
+# UI to saverule.php
 ###############################################################################
 
 require_once dirname(__FILE__).'/common.php';
@@ -10,9 +10,9 @@ $isUpdate = isset($_GET["id"]);
 
 $fields = array("dept", "position", "addlist", "notificationlist");
 
-f ($isUpdate) {
-  $ruleid = $_GET["id"];
-  $sql = "SELECT " . join(", ", $fields) . " FROM listaddrules WHERE id = " . $mdb2->quote(ruleid);
+if ($isUpdate) {
+  $ruleid = $_GET["ruleid"];
+  $sql = "SELECT " . join(", ", $fields) . " FROM emailrules WHERE id = " . $mdb2->quote(ruleid);
   $mdb2->setLimit(1);
   $res =& $mdb2->query($sql);
   if(PEAR::isError($res)) {
@@ -32,36 +32,42 @@ f ($isUpdate) {
 <?php } else { ?>
 <title>The Tech Mailing List Rule Addition Page</title>
 <?php } ?>
-<style type="text/css">
-td { padding:2px;text-align:center }
-</style>
 </head>
 <body style='margin:15px auto;padding:5px 20px;width:860px;'>
 <h1 align="center">The Tech</h1>
 <?php if ($isUpdate) { ?>
-<h2 align="center">Staff Modification Page</h2>
+<h2 align="center">Email List Rule Modification Page</h2>
 <?php } else { ?>
-<h2 align="center">Staff Addition Page</h2>
+<h2 align="center">Email List Rule Creation Page</h2>
 <?php } ?>
-<form method="post" action="./createrule.php">
-      <select onchange="updateTitles()" name="dept">
+<form method="post" action="./saverule.php">
+      Department: <select onchange="updateTitles()" name="dept">
+        <option <?=isset($dept)?"":"selected"?>></option>
 <?php foreach (getDepartments() as $department) { ?>
         <option value="<?=$department?>"<?=($dept==$department)?" selected":""?>><?=$department?></option>
 <?php } ?>
         </select>
+	Position: 
         <select name="position">
+	<option <?=isset($position)?"":" selected " ?>></option>
+	<option value="*" <?=($position==="*")?"selected":""?>>Any position.</option> 
 <?php if(isset($dept)) { foreach (getDepartmentTitles($dept) as $title) { ?>
         <option value="<?=$title?>"<?=($position==$title)?" selected":""?>><?=$title?></option>
 <?php } } else { ?>
         <!-- This will be filled in with JavaScript -->
-        <option></option>
 <?php } ?>
         </select>
-
+	<br />
+	    Mailing list to subscribe staffer to: <input type="text" name="addlist"></input>
+	    (e.g., tech-talk)
+	<br />
+	    Mailing list to notify: <input type="text" name="notificationlist"></input>
+	    (e.g., tech-talk-owner)
+	<br />
 <?php if ($isUpdate) { ?>
-  <input type="hidden" name="update" value="<?=($_GET['ID'])?>">
+  <input type="hidden" name="ruleid" value="<?=($_GET['ruleid'])?>">
 <?php } ?>
-    <p align="center">
+  <p align="center">
     <input style="margin-right:10%" type="reset" value="Reset">
     <input type="submit" value="Submit" name="submit">
     <input style="margin-left:10%" type="submit" value="Delete!" name="delete">
@@ -88,7 +94,7 @@ function updateTitles() {
   xmlhttp.open("GET",url,false);
   xmlhttp.send(null);
   var titles = JSON.parse(xmlhttp.responseText);
-  var html = "";
+  var html = 	'<option value="*">Any position.</option>';
   for (t in titles) {
     html += "<option value='" + titles[t] + "'>" + titles[t] + "</option>\n";
   }
