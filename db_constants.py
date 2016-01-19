@@ -26,8 +26,6 @@ def run():
             db_pass = right
         elif left == "db_name":
             db_name = right
-        else:
-            print left
     return db_user, db_pass, db_name
 
 db_user, db_pass, db_name = run()
