@@ -57,7 +57,7 @@ if ($isupdate) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="<?=$redirect_wait?>; url=.">
+<meta http-equiv="refresh" content="<?=$redirect_wait?>; url=rules.php">
 </head>
 <body onload="updateCounter();">
 You have successfully modified the email rule. If, instead, you have fucked 
