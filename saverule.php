@@ -29,11 +29,11 @@ if(!(isset($_POST["dept"]) && formatYear($_POST["position"]))) {
 // Validation complete. If this is an update, perform update! 
 if ($isupdate) {
   error_log("Updating emailrule " . $_POST["ruleid"]);
-  $sql = "UPDATE emailrules SET dept=" . $mdb2->quote($dept);
-  $sql .= " position=" . $mdb2->quote($position);
-  $sql .= " addlist=" . $mdb2->quote($addlist);
+  $sql = "UPDATE emailrules SET dept=" . $mdb2->quote($dept) . ",";
+  $sql .= " position=" . $mdb2->quote($position) . ",";
+  $sql .= " addlist=" . $mdb2->quote($addlist) . ",";
   $sql .= " notificationlist=" . $mdb2->quote($notificationlist);
-  $sql .= " WHERE id=" . $mdb2->quote($ruleid);
+  $sql .= " WHERE ruleid=" . ((int)$ruleid);
   $res =& $mdb2->exec($sql);
   if(PEAR::isError($res)) {
     error_log($res->getDebugInfo());
@@ -71,7 +71,7 @@ it up, e-mail <a href="mailto:techno@tech.mit.edu">techno@tech.mit.edu</a>.<br>
   function updateCounter() {
     var s = "second";
     if(time != 1) { s += "s"; }
-    if(time < 0 ) { window.location = "./rules.php"; return; } 
+    if(time < 0 ) { window.location = "rules.php"; return; } 
     document.getElementById("note").innerHTML = text + time + " " + s;
     time--;
     setTimeout("updateCounter()", 1000);
