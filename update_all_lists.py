@@ -62,9 +62,9 @@ def get_all_rules():
     return [Rule(row) for row in cursor.fetchall()]
 
 def update_last_time_records(this_time):
-    #sql_query = "DELETE FROM previousemailupdate"
+    sql_query = "DELETE FROM previousemailupdate"
     cursor = db.cursor()
-    #cursor.execute(sql_query)
+    cursor.execute(sql_query)
     sql_query = "INSERT INTO previousemailupdate (addlist, athena_username) VALUES (%s, %s)"
     cursor.executemany(sql_query, ((entry[0], entry[1]) for entry in this_time))
     
@@ -148,7 +148,7 @@ def send_notification(notificationaddress, addresses_added):
         for subscriber in subscribers:
             lines.append("   " + subscriber)
         lines.append("")
-    send_email(to=notificationaddress, sender="general@the-tech.mit.edu", subject="TT Email List Update", body="\n".join(lines))
+    send_email(to=notificationaddress, sender="navarre@the-tech.mit.edu", subject="TT Email List Update", body="\n".join(lines))
     
 def add_to_mailinglist(listname, new_subscribers):
     def add_domain(address):
