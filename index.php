@@ -29,6 +29,9 @@ $res->bindColumn('email', $email);
     <td colspan="4"><a href="createform.php">Create New User</a></td>
   </tr>
   <tr>
+    <td><a href="rules.php">Manage email rules! (New in 2016!)</a></td>
+  </tr>
+  <tr>
     <td colspan="4"><a href="taggedTextMast.php">Download Tagged Text Masthead</a></td>
   </tr>
   <tr>

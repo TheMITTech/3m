@@ -6,7 +6,7 @@
 
 require_once dirname(__FILE__).'/common.php';
 
-$redirect_wait = 5; // Number of seconds to wait before redirecting if no error
+$redirect_wait = 1; // Number of seconds to wait before redirecting if no error
 $isupdate = isset($_POST[ruleid]);
 $ruleid = $_POST[ruleid];
 
@@ -71,7 +71,7 @@ it up, e-mail <a href="mailto:techno@tech.mit.edu">techno@tech.mit.edu</a>.<br>
   function updateCounter() {
     var s = "second";
     if(time != 1) { s += "s"; }
-    if(time < 0 ) { window.location = "."; return; } 
+    if(time < 0 ) { window.location = "./rules.php"; return; } 
     document.getElementById("note").innerHTML = text + time + " " + s;
     time--;
     setTimeout("updateCounter()", 1000);

@@ -8,7 +8,14 @@
   <body>
     <h1>Email Rules</h1>
     <table border="5">
-    <a href="./">Return to 3m</a>
+      <ul>
+	<li>
+	  <a href="./">Return to 3m</a>
+	</li>
+	<li>
+	  <a href="./createrule.php">New Rule</a>
+	</li>
+      </ul>
    <tr style="font-weight:bold;"><td>Department</td><td>Position</td><td>Add-list</td><td>Notification List</td><td></td></tr>
     <?php
        $fields = array("ruleid", "dept", "position", "addlist", "notificationlist");
