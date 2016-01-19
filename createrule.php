@@ -6,13 +6,13 @@
 
 require_once dirname(__FILE__).'/common.php';
 
-$isUpdate = isset($_GET["id"]);
+$isUpdate = isset($_GET["ruleid"]);
 
 $fields = array("dept", "position", "addlist", "notificationlist");
 
 if ($isUpdate) {
   $ruleid = $_GET["ruleid"];
-  $sql = "SELECT " . join(", ", $fields) . " FROM emailrules WHERE id = " . $mdb2->quote(ruleid);
+  $sql = "SELECT " . join(", ", $fields) . " FROM emailrules WHERE ruleid = " . ((int) $ruleid);
   $mdb2->setLimit(1);
   $res =& $mdb2->query($sql);
   if(PEAR::isError($res)) {
@@ -20,8 +20,9 @@ if ($isUpdate) {
     fatal("Could not get information for $ruleid: ".$res->getMessage());
   }
   foreach ($fields as $field) {
-    $res->bindColumn($field, $$field);
+     $res->bindColumn($field, $$field);
   }
+  $row = $res->fetchRow();
 }
 ?>
 <html>
@@ -49,6 +50,13 @@ if ($isUpdate) {
         </select>
 	Position: 
         <select name="position">
+	<?php
+		if(isset($dept)) {
+		  print("DEPT SET");
+		} else {
+		  print("DEPT UNSET");
+		}
+	?>
 	<option <?=isset($position)?"":" selected " ?>></option>
 	<option value="*" <?=($position==="*")?"selected":""?>>Any position.</option> 
 <?php if(isset($dept)) { foreach (getDepartmentTitles($dept) as $title) { ?>
@@ -58,10 +66,13 @@ if ($isUpdate) {
 <?php } ?>
         </select>
 	<br />
-	    Mailing list to subscribe staffer to: <input type="text" name="addlist"></input>
+	    Mailing list to subscribe staffer to:
+	    <input type="text" name="addlist" value="<?php print($addlist)?>" />
+	    </input>
 	    (e.g., tech-talk)
 	<br />
-	    Mailing list to notify: <input type="text" name="notificationlist"></input>
+	    Mailing list to notify:
+	    <input type="text" name="notificationlist" value="<?php print($notificationlist)?>" />
 	    (e.g., tech-talk-owner)
 	<br />
 <?php if ($isUpdate) { ?>
