@@ -50,7 +50,7 @@ class Rule:
         return str(self)
     
 def get_all_users():
-    sql_query = "SELECT dept, position, athena_username FROM staff"
+    sql_query = "SELECT dept, position, athena_username FROM staff WHERE active='yes'"
     cursor = db.cursor()
     cursor.execute(sql_query)
     return cursor.fetchall()
@@ -62,9 +62,9 @@ def get_all_rules():
     return [Rule(row) for row in cursor.fetchall()]
 
 def update_last_time_records(this_time):
-    sql_query = "DELETE FROM previousemailupdate"
+    #sql_query = "DELETE FROM previousemailupdate"
     cursor = db.cursor()
-    cursor.execute(sql_query)
+    #cursor.execute(sql_query)
     sql_query = "INSERT INTO previousemailupdate (addlist, athena_username) VALUES (%s, %s)"
     cursor.executemany(sql_query, ((entry[0], entry[1]) for entry in this_time))
     
@@ -158,8 +158,9 @@ def add_to_mailinglist(listname, new_subscribers):
             return address.strip()
     new_subscribers = map(add_domain, new_subscribers)
     command = ["/usr/lib/mailman/bin/add_members", "-r", "-", "--welcome-msg=no", listname]
-    ps = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=os.devnull, stdout=os.devnull, shell=False)
-    ps.communicate("\n".join(new_subscribers) + "\n")
+    with open(os.devnull, 'w') as null:
+        ps = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=None, stdout=null, shell=False)
+        ps.communicate("\n".join(new_subscribers) + "\n")
 
 last_time = get_last_update_info()
 users = get_all_users()
