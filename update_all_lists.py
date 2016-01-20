@@ -162,6 +162,30 @@ def add_to_mailinglist(listname, new_subscribers):
         ps = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=None, stdout=null, shell=False)
         ps.communicate("\n".join(new_subscribers) + "\n")
 
+def sort_additions(additions):
+    # additions are in the form mailinglist, username, notificationlist
+    mailmanlists = []
+    otherlists = {}
+    for addition in additions:
+        mailinglist, username, notificationlist = addition
+        pieces = mailinglist.split(":")
+        if(len(pieces)==1):
+            mailmanlists.append(addition)
+            continue
+        kind = pieces[0].lower().strip()
+        assert(len(pieces)==2)
+        if kind not in otherlists:
+            otherlists[kind] = []
+        otherlists[kind].append((pieces[1], username))
+    return mailmanlists, otherlists
+
+def update_moira(moira_additions):
+    moira_additions.sort()
+    with open("moira_lists.txt", "w") as out:
+        for mailinglist, user in moira_additions:
+            out.write(mailinglist.strip().lower() + " USER " + user.strip().lower() +  "\n")
+
+
 last_time = get_last_update_info()
 users = get_all_users()
 rules = get_all_rules()
@@ -169,7 +193,16 @@ this_time = []
 for rule in rules:
     for user in users:
         this_time.extend(rule.all_resulting_additions(user))
-additions, notifications = summarize(last_time, this_time)
+
+results_now_mailman, otherlists = sort_additions(this_time)
+
+if "moira" in otherlists:
+    update_moira(otherlists["moira"])
+
+# From this point forth, we deal only in TT lists :)
+additions, notifications = summarize(last_time, results_now_mailman)
+
+print notifications
 
 for notificationaddress, addresses_added in notifications.items():
     send_notification(notificationaddress, addresses_added)
