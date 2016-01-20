@@ -202,8 +202,6 @@ if "moira" in otherlists:
 # From this point forth, we deal only in TT lists :)
 additions, notifications = summarize(last_time, results_now_mailman)
 
-print notifications
-
 for notificationaddress, addresses_added in notifications.items():
     send_notification(notificationaddress, addresses_added)
 for mailing_list, subscribers in additions.items():
