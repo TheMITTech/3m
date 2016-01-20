@@ -19,7 +19,7 @@
    <tr style="font-weight:bold;"><td>Department</td><td>Position</td><td>Add-list</td><td>Notification List</td><td></td></tr>
     <?php
        $fields = array("ruleid", "dept", "position", "addlist", "notificationlist");
-       $sql = "SELECT " . join(", ", $fields) . " FROM emailrules";
+       $sql = "SELECT " . join(", ", $fields) . " FROM emailrules ORDER BY dept, position, notificationlist";
        $res = $mdb2->query($sql);
        foreach($fields as $field) {
          $res->bindColumn($field, $$field);
