@@ -42,10 +42,10 @@ if(isset($_POST["birthday"])) {
 }
 
 // Validation complete. If this is an update, disable their old information
-if (isset($_POST['update'])) {
+if (isset($_POST['staffid'])) {
   error_log("Updating " . $_POST["display_name"]);
-  $sql = "UPDATE staff SET end_date=CURDATE(), active='no' WHERE email=";
-  $sql .= $mdb2->quote($_POST["email"]) . " AND active = 'yes'";
+  $sql = "UPDATE staff SET end_date=CURDATE(), active='no' WHERE staffid=";
+  $sql .= $mdb2->quote($_POST["staffid"]) . " AND active = 'yes'";
   $res =& $mdb2->exec($sql);
   if(PEAR::isError($res)) {
     error_log($res->getDebugInfo());

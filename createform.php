@@ -6,14 +6,14 @@
 
 require_once dirname(__FILE__).'/common.php';
 
-$isUpdate = isset($_GET["email"]);
+$isUpdate = isset($_GET["staffid"]);
 
 if ($isUpdate) {
   $fields = array("first", "middle", "last", "display_name", "year", "gender",
     "email", "dept", "position", "begin_date", "end_date", "athena_username", 
     "birthday", "phone");
-  $sql = "SELECT " . join(", ", $fields) . " FROM staff WHERE email = ";
-  $sql .= $mdb2->quote($_GET["email"]) . " AND active = 'yes'";
+  $sql = "SELECT " . join(", ", $fields) . " FROM staff WHERE staffid = ";
+  $sql .= $mdb2->quote($_GET["staffid"]) . " AND active = 'yes'";
   $mdb2->setLimit(1);
   $res =& $mdb2->query($sql);
   if(PEAR::isError($res)) {
@@ -137,7 +137,7 @@ td { padding:2px;text-align:center }
     </tr>
   </table>
 <?php if ($isUpdate) { ?>
-  <input type="hidden" name="update" value="yes, motherfucker">
+  <input type="hidden" name="staffid" value="<?=$_GET["staffid"]?>">
 <?php } ?>
     <p align="center">
     <input style="margin-right:10%" type="reset" value="Reset">

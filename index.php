@@ -6,14 +6,14 @@
 
 require_once dirname(__FILE__).'/common.php';
 
-$sql = "SELECT display_name, email FROM staff WHERE active='yes' GROUP BY email ORDER BY last";
+$sql = "SELECT display_name, staffid FROM staff WHERE active='yes' GROUP BY email ORDER BY last";
 $res =& $mdb2->query($sql);
 if(PEAR::isError($res)) { 
   error_log($res->getDebugInfo());
   fatal("Could not get staff listing: ".$res->getMessage()); 
 }
 $res->bindColumn('display_name', $name);
-$res->bindColumn('email', $email);
+$res->bindColumn('staffid', $staffid);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -49,8 +49,8 @@ $res->bindColumn('email', $email);
 <?php while ($row = $res->fetchRow()) { ?>
   <tr>
   <td><?=$name?></td> <td><!--dept--></td> <td><!--$position--></td> 
-    <td><a href="individual.php?email=<?=$email?>"><input type="button" value="View..."></a></td>
-    <td><a href="createform.php?email=<?=$email?>"><input type="button" value="Edit..."></a></td>
+    <td><a href="individual.php?staffid=<?=$staffid?>"><input type="button" value="View..."></a></td>
+    <td><a href="createform.php?staffid=<?=$staffid?>"><input type="button" value="Edit..."></a></td>
   </tr>
 <? } ?>
 </table>
