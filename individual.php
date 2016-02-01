@@ -6,7 +6,7 @@
 
 require_once dirname(__FILE__).'/common.php';
 
-$email = $_GET["email"];
+$staffid = $_GET["staffid"];
 $fmt = "j F Y";
 
 // Get information for the header
@@ -17,7 +17,7 @@ $sql .= "WHERE ";
 # so, there is no fear of confusion. This makes it possible to more easily
 # see history of departed staff.
 # $sql .= "active='yes' AND ";
-$sql .= "email=".$mdb2->quote($email);
+$sql .= "staffid=".$mdb2->quote($staffid);
 $sql .= " ORDER BY active ASC";
 $res =& $mdb2->query($sql);
 if(PEAR::isError($res)) {
