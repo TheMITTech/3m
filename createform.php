@@ -80,7 +80,8 @@ td { padding:2px;text-align:center }
       </td>
       <td>
         Male <input type="radio" value="Male" name="gender"<?=$gender=="male"?" checked":""?>><br/>
-        Female <input type="radio" value="Female" name="gender"<?=$gender=="female"?" checked":""?>>
+        Female <input type="radio" value="Female" name="gender"<?=$gender=="female"?" checked":""?>><br />
+	Other <input type="radio" value="Other" name="gender" <?=$gender=="other"?" checked":""?>>
       </td>
     </tr>
     <tr>
