@@ -11,7 +11,7 @@ $isUpdate = isset($_GET["staffid"]);
 if ($isUpdate) {
   $fields = array("first", "middle", "last", "display_name", "year", "gender",
     "email", "dept", "position", "begin_date", "end_date", "athena_username", 
-    "birthday", "phone");
+    "birthday", "phone", "gchat");
   $sql = "SELECT " . join(", ", $fields) . " FROM staff WHERE staffid = ";
   $sql .= $mdb2->quote($_GET["staffid"]) . " AND active = 'yes'";
   $mdb2->setLimit(1);
@@ -76,6 +76,9 @@ td { padding:2px;text-align:center }
         <input onkeyup="updateAthenaUsername()" type="text" size="15" maxlength="50" name="email" value="<?=$email?>">
       </td>
       <td>
+        <input type="text" size="15" maxlength="30" name="gchat" value="<?=$gchat?>">
+      </td>
+      <td>
         <input type="text" size="4" maxlength="4" name="year" value="<?=$year?>">
       </td>
       <td>
@@ -86,6 +89,7 @@ td { padding:2px;text-align:center }
     </tr>
     <tr>
       <td>E-Mail Address</td>
+      <td>gchat</td>
       <td>Class Year (YYYY)
       <font size="1"><br />0 for Grad
       <br />9998 for CME

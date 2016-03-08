@@ -10,7 +10,7 @@ $staffid = $_GET["staffid"];
 $fmt = "j F Y";
 
 // Get information for the header
-$sql = "SELECT display_name, email, phone, birthday FROM staff ";
+$sql = "SELECT display_name, email, phone, birthday, gchat FROM staff ";
 $sql .= "WHERE ";
 # Removed limitation to active staff members  -- email addreses
 # are ~never recycled given an IS&T policy decision in the late 1990s,
@@ -29,6 +29,7 @@ $name = $row[0];
 $email= $row[1];
 $phone= preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $row[2]);
 $birthday = $row[3] == 0 ? "Not set" : date($fmt, strtotime($row[3]));
+$gchat = $row[4];
 
 // Get each position's information
 $sql = "SELECT dept, position, UNIX_TIMESTAMP(begin_date) as begin_date, ";
@@ -54,6 +55,7 @@ $res->bindColumn('end_date', $end_date, 'integer');
   <table>
     <tr><td colspan=2><a href="./">&lt;&lt; Go Back to Main Page</a></td></tr>
     <tr><th style='text-align: right'>E-mail:</th><td><?=$email?></td>
+    <tr><th style='text-align: right'>gchat:</th><td><?=$gchat?></td>
     <tr><th style='text-align: right'>Phone:</th><td><?=$phone?></td>
     <tr><th style='text-align: right'>Birthday:</th><td><?=$birthday?></td>
     <tr><th style='text-align: right'>Facebook:</th><td><a href="http://www.facebook.com/search/?q=<?=$name?>">Search for Them</a></td>

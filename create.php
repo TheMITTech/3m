@@ -59,7 +59,7 @@ if($_POST["delete"] != "Deactive me!") {
   // work
   $fields = array("first", "middle", "last", "display_name", "year", "gender",
     "email", "dept", "position", "begin_date", "athena_username", "birthday", 
-    "phone");
+    "phone", "gchat");
   $values = array();
   foreach ($fields as $f) { array_push($values, $mdb2->quote($_POST[$f])); }
   $sql = "INSERT INTO staff (" . join(", ", $fields) . ") VALUES (";
