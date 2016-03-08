@@ -1,8 +1,8 @@
--- MySQL dump 10.11
+-- MySQL dump 10.13  Distrib 5.5.42, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: 3m
 -- ------------------------------------------------------
--- Server version	5.0.51a-24+lenny3-log
+-- Server version	5.5.42-1-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,123 +16,151 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `staff`
---
-
-DROP TABLE IF EXISTS `staff`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `staff` (
-  `staffid` mediumint(5) unsigned NOT NULL auto_increment,
-  `first` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-  `middle` varchar(20) collate utf8_unicode_ci default '',
-  `last` varchar(30) collate utf8_unicode_ci NOT NULL default '',
-  `display_name` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-  `year` smallint(4) unsigned NOT NULL default '9999' COMMENT 'year zero is Grad Student',
-  `gender` enum('male','female') collate utf8_unicode_ci NOT NULL default 'male',
-  `email` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-  `dept` varchar(20) collate utf8_unicode_ci NOT NULL,
-  `position` varchar(30) collate utf8_unicode_ci NOT NULL,
-  `begin_date` date NOT NULL,
-  `end_date` date NOT NULL,
-  `athena_username` varchar(8) collate utf8_unicode_ci NOT NULL default '',
-  `birthday` date NOT NULL default '0000-00-00',
-  `phone` char(10) collate utf8_unicode_ci NOT NULL default '000000000' COMMENT 'US 10 digit only. No dashes',
-  `previd` mediumint(5) unsigned default NULL,
-  `enable_mail` enum('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-  `active` enum('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-  PRIMARY KEY  (`staffid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-SET character_set_client = @saved_cs_client;
-
---
--- Dumping data for table `staff`
---
-
-LOCK TABLES `staff` WRITE;
-/*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-/*!40000 ALTER TABLE `staff` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table sructure for table `emailrules` and `previousemailupdate`
---
--- Written by hand. 
-SET @saved_cs_client = @@character_set_client;
-SET character_set_client = utf8;
-DROP TABLE IF EXISTS emailrules;
-CREATE TABLE `emailrules` (
-       `ruleid` int unsigned NOT NULL auto_increment,
-       `dept` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-       `position` varchar(30) collate utf8_unicode_ci NOT NULL,
-       `addlist` varchar(150) collate utf8_unicode_ci NOT NULL,
-       `notificationlist` varchar(35) collate utf8_unicode_ci NOT NULL,
-       PRIMARY KEY (`ruleid`)
-       ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-DROP TABLE IF EXISTS previousemailupdate;
-CREATE TABLE `previousemailupdate` (
-       `updateid` int unsigned NOT NULL auto_increment,
-       `addlist` varchar(40) collate utf8_unicode_ci NOT NULL,
-       `athena_username` varchar(8) collate utf8_unicode_ci NOT NULL,
-       PRIMARY KEY (`updateid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Table structure for table `departments`
 --
 
 DROP TABLE IF EXISTS `departments`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `departments` (
-  `deptid` tinyint(2) unsigned NOT NULL auto_increment,
-  `shortname` varchar(4) collate utf8_unicode_ci NOT NULL default '',
-  `name` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-  `order` tinyint(2) unsigned NOT NULL default '0',
-  `isActive` enum('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-  PRIMARY KEY  (`deptid`),
+  `deptid` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
+  `shortname` varchar(4) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `isActive` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  PRIMARY KEY (`deptid`),
   UNIQUE KEY `shortname` (`shortname`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-SET character_set_client = @saved_cs_client;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `departments`
+-- Table structure for table `emailrules`
 --
 
-LOCK TABLES `departments` WRITE;
-/*!40000 ALTER TABLE `departments` DISABLE KEYS */;
-INSERT INTO `departments` VALUES (1,'exec','Executive Board',0,'yes'),(2,'nuz','News',1,'yes'),(3,'prod','Production',2,'yes'),(4,'opn','Opinion',3,'yes'),(5,'spo','Sports',4,'yes'),(6,'rtz','Arts',5,'yes'),(7,'fto','Photography',6,'yes'),(8,'cl','Campus Life',7,'yes'),(9,'biz','Business',8,'yes'),(10,'ten','Technology',9,'yes'),(11,'etc','Editors at Large',10,'yes'),(12,'adv','Advisory Board',11,'yes');
-/*!40000 ALTER TABLE `departments` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `emailrules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emailrules` (
+  `ruleid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `dept` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `position` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `addlist` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `notificationlist` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`ruleid`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `maillist_members_not_in_use`
+--
+
+DROP TABLE IF EXISTS `maillist_members_not_in_use`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `maillist_members_not_in_use` (
+  `maillistmemberid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `maillistid` smallint(3) unsigned NOT NULL DEFAULT '0',
+  `staffid` mediumint(5) unsigned NOT NULL DEFAULT '0',
+  `isActive` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  PRIMARY KEY (`maillistmemberid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `maillists_not_in_use`
+--
+
+DROP TABLE IF EXISTS `maillists_not_in_use`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `maillists_not_in_use` (
+  `maillistid` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `isActive` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  PRIMARY KEY (`maillistid`)
+) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `positions_not_in_use`
+--
+
+DROP TABLE IF EXISTS `positions_not_in_use`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `positions_not_in_use` (
+  `posid` mediumint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `staffid` mediumint(5) unsigned NOT NULL DEFAULT '0',
+  `deptid` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `deptposid` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `begin` date NOT NULL DEFAULT '0000-00-00',
+  `end` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`posid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `previousemailupdate`
+--
+
+DROP TABLE IF EXISTS `previousemailupdate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `previousemailupdate` (
+  `updateid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `addlist` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `athena_username` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`updateid`)
+) ENGINE=MyISAM AUTO_INCREMENT=1479 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `staff`
+--
+
+DROP TABLE IF EXISTS `staff`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `staff` (
+  `staffid` mediumint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `first` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `middle` varchar(20) COLLATE utf8_unicode_ci DEFAULT '',
+  `last` varchar(30) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `display_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `year` smallint(4) unsigned NOT NULL DEFAULT '9999' COMMENT 'year zero is Grad Student',
+  `gender` enum('male','female') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'male',
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `dept` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `position` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `begin_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `athena_username` varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `birthday` date NOT NULL DEFAULT '0000-00-00',
+  `phone` char(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '000000000' COMMENT 'US 10 digit only. No dashes',
+  `previd` mediumint(5) unsigned DEFAULT NULL,
+  `enable_mail` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  `active` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  PRIMARY KEY (`staffid`)
+) ENGINE=MyISAM AUTO_INCREMENT=1615 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `titles`
 --
 
 DROP TABLE IF EXISTS `titles`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `titles` (
-  `deptposid` tinyint(2) unsigned NOT NULL auto_increment,
-  `name` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-  `order` tinyint(1) unsigned NOT NULL default '0',
-  `isManboard` enum('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-  `isActive` enum('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-  `inDepartment` set('adv','biz','cl','etc','exec','fto','nuz','opn','prod','rtz','spo','ten') collate utf8_unicode_ci NOT NULL default '',
-  PRIMARY KEY  (`deptposid`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-SET character_set_client = @saved_cs_client;
-
---
--- Dumping data for table `titles`
---
-
-LOCK TABLES `titles` WRITE;
-/*!40000 ALTER TABLE `titles` DISABLE KEYS */;
-INSERT INTO `titles` VALUES (1,'Chairman',1,'yes','yes','exec'),(2,'Editor in Chief',2,'yes','yes','exec'),(3,'Executive Editor',5,'yes','yes','exec'),(4,'Business Manager',3,'yes','yes','exec'),(5,'Managing Editor',4,'yes','yes','exec'),(6,'Editor',1,'yes','yes','cl,fto,nuz,opn,prod,rtz,spo'),(7,'Associate Editor',2,'no','yes','cl,fto,nuz,opn,prod,rtz,spo'),(8,'Staff',3,'no','yes','cl,fto,nuz,opn,prod,rtz,spo,ten'),(9,'Director',1,'yes','yes','ten'),(10,'Meteorologist',4,'no','yes','nuz'),(11,'Police Log Compiler',5,'no','yes','nuz'),(12,'Cartoonist',4,'no','yes','cl'),(13,'Advertising Manager',1,'yes','yes','biz'),(14,'Operations Manager',2,'yes','yes','biz'),(15,'Contributing Editor',1,'yes','yes','etc'),(16,'Senior Editor',2,'yes','yes','etc'),(17,'Illustrator',4,'yes','yes','prod'),(18,'',1,'yes','yes','adv');
-/*!40000 ALTER TABLE `titles` ENABLE KEYS */;
-UNLOCK TABLES;
+  `deptposid` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `order` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isManboard` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  `isActive` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  `inDepartment` set('adv','biz','cl','etc','exec','fto','nuz','opn','prod','rtz','spo','ten','cpy','med') COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`deptposid`)
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -143,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-03-12  2:50:08
+-- Dump completed on 2016-03-08 17:18:32
