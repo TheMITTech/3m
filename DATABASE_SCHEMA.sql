@@ -140,6 +140,7 @@ CREATE TABLE `staff` (
   `previd` mediumint(5) unsigned DEFAULT NULL,
   `enable_mail` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
   `active` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
+  `gchat` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`staffid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1615 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -171,4 +172,4 @@ CREATE TABLE `titles` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-08 17:18:32
+-- Dump completed on 2016-03-08 17:23:35
