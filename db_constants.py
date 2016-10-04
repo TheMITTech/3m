@@ -5,9 +5,12 @@ strings from config.php.
 Place them in the global namespace as db_user, db_pass,
 and db_name, respectively. 
 '''
+import os
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
 def run():
-    for line in open("config.php", "r"):
+    for line in open(os.path.join(current_directory, "./config.php"), "r"):
         line = line.split("#")[0].strip()
         if len(line) == 0 or line.count("=") != 1:
             continue;
