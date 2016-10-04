@@ -26,6 +26,10 @@ if(!(isset($_POST["dept"]) && formatYear($_POST["position"]))) {
   $dept = $_POST["dept"];
   $position = $_POST["position"];
 }
+if (isset($_POST["delete"])) {
+   fatal("Delete not supported.");
+}
+
 // Validation complete. If this is an update, perform update! 
 if ($isupdate) {
   error_log("Updating emailrule " . $_POST["ruleid"]);
