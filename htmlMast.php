@@ -40,6 +40,9 @@ $exec = getDepartmentMembers(array_shift($depts));
 header('Content-type: text/html; charset=utf-8');
 // The first thing we want in our output is actually php, so we'll need a print
 // block to play nicely
+
+<<< IGNOREUNTIL
+
 print <<< EOF
 <?
 require("../lib/includes/the-tech.php");
@@ -51,6 +54,8 @@ require("../lib/templates/header.php");
 require("./sidebar.html");
 ?>
 EOF
+
+IGNOREUNTIL
 ?>
 
 <link rel="stylesheet" href="masthead.css" type="text/css">
@@ -81,8 +86,7 @@ Please send all address changes to our mailing address: The Tech, P.O. Box
 (617)&nbsp;253-1541. Business: (617)&nbsp;258-8324. Facsimile: 
 (617)&nbsp;258-8226. <em>Advertising, subscription, and typesetting rates 
 available.</em> Entire contents <strong>&copy;&nbsp;<?=$currentyear?> The 
-Tech</strong>. <em>Printed on recycled paper by Mass Web Printing 
-Company.</em></p>
+Tech</strong>. <em>Printed by Turley Publications, Inc.</em></p>
 
 <p id="last-updated">This masthead was last updated on <?=date("F j, Y")?>.</p>
 
