@@ -25,6 +25,8 @@ import StringIO
 import subprocess
 from email.mime.text import MIMEText
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+
 default_domain = "the-tech.mit.edu"
 db_server = "localhost"
 db_name = db_constants.db_name
@@ -181,7 +183,7 @@ def sort_additions(additions):
 
 def update_moira(moira_additions):
     moira_additions.sort()
-    with open("moira_lists.txt", "w") as out:
+    with open(os.path.join(HERE, "moira_lists.txt"), "w") as out:
         for mailinglist, user in moira_additions:
             out.write(mailinglist.strip().lower() + " USER " + user.strip().lower() +  "\n")
 
