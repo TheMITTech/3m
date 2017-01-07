@@ -26,12 +26,20 @@ if(!(isset($_POST["dept"]) && formatYear($_POST["position"]))) {
   $dept = $_POST["dept"];
   $position = $_POST["position"];
 }
-if (isset($_POST["delete"])) {
-   fatal("Delete not supported.");
-}
 
+if (isset($_POST["delete"])) {
+   // Performing delete.
+   error_log("Deleting emailrule " . $ruleid);
+   $sql = "DELETE FROM emailrules ";
+   $sql .= "WHERE ruleid=" . ((int)$ruleid);
+   $res =& $mdb2->exec($sql);
+   if(PEAR::isError($res)) {
+       error_log($res->getDebugInfo());
+       fatal("ERROR: Could not delete emailrule: ".$res->getMessage());
+   }
+}
 // Validation complete. If this is an update, perform update! 
-if ($isupdate) {
+else if ($isupdate) {
   error_log("Updating emailrule " . $_POST["ruleid"]);
   $sql = "UPDATE emailrules SET dept=" . $mdb2->quote($dept) . ",";
   $sql .= " position=" . $mdb2->quote($position) . ",";
