@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.42, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.53, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: 3m
 -- ------------------------------------------------------
--- Server version	5.5.42-1-log
+-- Server version	5.5.53-0+deb8u1-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -47,7 +47,7 @@ CREATE TABLE `emailrules` (
   `addlist` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `notificationlist` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ruleid`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +111,7 @@ CREATE TABLE `previousemailupdate` (
   `addlist` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `athena_username` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`updateid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1479 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5923 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,7 +142,7 @@ CREATE TABLE `staff` (
   `active` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
   `gchat` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`staffid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1615 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1659 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,4 +172,4 @@ CREATE TABLE `titles` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-08 17:23:35
+-- Dump completed on 2017-01-09 16:13:12
